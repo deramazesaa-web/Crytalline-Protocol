@@ -60,57 +60,52 @@ Traditional blockchains (EVM) treat transactions as isolated state changes. Crys
 
 ---
 
-## II. FORMAL ARCHITECTURE
+---
 
-### 1. The Super-Subject ($\Sigma$)
-We define a Super-Subject as a formal set:
-$$S_t = \{ \mathcal{A}, \mathcal{R}, \mathcal{H} \}$$
+## 2. Formal Architecture
+
+### 2.1. The Super-Subject ($\Sigma$)
+A Super-Subject is defined as a formal set:
+$S_t = \{ \mathcal{A}, \mathcal{R}, \mathcal{H} \}$
+
 Where:
-- $\mathcal{A}$ = Assets (Value)
-- $\mathcal{R}$ = Rules (Axiomatic constraints)
-- $\mathcal{H}$ = History (Cryptographic proof)
+* **$\mathcal{A}$** = Assets (Value held)
+* **$\mathcal{R}$** = Rules (Axiomatic constraints)
+* **$\mathcal{H}$** = History (Cryptographic proof of previous states)
 
-### 2. The Logic Firewall (Axiom of Specification)
-We utilize the **Axiom Schema of Specification** to verify intents:
+### 2.2. The Logic Firewall (Axiom of Specification)
+We use the **Axiom Schema of Specification** to filter proposed state transitions:
 $$\forall z \exists y \forall x (x \in y \iff x \in z \wedge \phi(x))$$
-Here, $\phi(x)$ is the consistency predicate. If a transaction $\Delta$ makes $\phi$ false (i.e., introduces a contradiction $\bot$), the transition is physically impossible within the CVM.
+
+Here, $\phi(x)$ is the consistency predicate. If a transaction $\Delta$ renders the system inconsistent, it is pruned before execution.
 
 ---
 
-## III. THE CRYSTALLINE VIRTUAL MACHINE (CVM)
+## 3. The Crystalline Virtual Machine (CVM)
 
-The CVM is not a standard executor; it is an **Automated Theorem Prover**.
-
-- **L0 (Axiomatic Core):** Immutable ZF-axioms (e.g., Extensionality, Power Set, Regularity).
-- **L1 (Constitutional Layer):** Deontic logic filters (Obligation $O$, Permission $P$, Prohibition $F$) that define the "will" of the Super-Subject.
-- **L2 (Operational Layer):** Tactical rules and AI-agent permissions.
-
----
-
-## 3.1. Deontic Logic Interface (The Language of Intent)
-
+### 3.4. Deontic Logic Interface (The Language of Intent)
 The CVM translates high-level AI intents into **Standard Deontic Logic (SDL)**. This allows the Super-Subject to define normative constraints that are mathematically enforceable.
 
-- **Operator $O(p)$ (Obligation):** Actions the agent *must* perform (e.g., maintaining a collateral ratio).
-- **Operator $P(p)$ (Permission):** Actions the agent *is allowed* to perform within the sandbox.
-- **Operator $F(p)$ (Prohibition):** Hard boundaries that the CVM will block at the logical level.
+- **Operator $O(p)$ (Obligation):** Actions the agent *must* perform.
+- **Operator $P(p)$ (Permission):** Actions the agent *is allowed* to perform.
+- **Operator $F(p)$ (Prohibition):** Hard boundaries blocked at the logical level.
 
-### Example: Automated Debt Management
-In a Crystalline-based DeFi vault, the rule is not a line of code, but a logical predicate:
-$$O(\text{repay}) \leftarrow (\text{collateral} < \text{threshold})$$
+**Example: Automated Debt Management**
+A rule in Crystalline is not just code, but a logical predicate:
+$O(\text{repay}) \leftarrow (\text{collateral} < \text{threshold})$
 
-If an AI agent attempts to execute a dividend distribution while an Obligation ($O$) to repay debt is active, the CVM detects a **Deontic Conflict**. Since $O(p) \implies \neg P(\neg p)$, the distribution is rejected as a logical contradiction.
+If an AI agent attempts to distribute dividends while $O(\text{repay})$ is active, the CVM detects a conflict ($O(p) \implies \neg P(\neg p)$) and rejects the transaction as a logical contradiction.
+
 ---
 
-## IV. TECHNICAL PROOF: PREVENTING RE-ENTRANCY
+## 4. Technical Proof: Preventing Re-entrancy
 
-A major vulnerability in current DeFi is the **Re-entrancy attack**. In the Crystalline Protocol, this is blocked by the **Axiom of Regularity (Foundation)**:
+In Crystalline, re-entrancy is blocked by the **Axiom of Regularity (Foundation)**:
 $$\forall x (x \neq \emptyset \implies \exists y \in x (y \cap x = \emptyset))$$
 
-In a re-entrancy attack, a membership cycle is attempted ($A \in B$ and $B \in A$). The CVM detects this cycle as a violation of the Axiom of Regularity and prunes the transaction before execution. **The system doesn't "detect a hack"; it refuses to exist in an inconsistent state.**
 
----
 
+In an exploit, a membership cycle is attempted ($A \in B$ and $B \in A$). The CVM detects this cycle as a violation of the Axiom of Regularity and prunes the transaction. The system refuses to exist in an inconsistent state.
 ## V. THE ECONOMICS OF CONSISTENCY
 
 - **The Logical Premium:** Assets in a Crystalline environment are valued higher because they lack "technical debt" and "governance risk."
