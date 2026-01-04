@@ -44,6 +44,27 @@ We are looking for:
 - **AI Safety Researchers:** To help define the standard "Safety Axioms" for autonomous agents.
 - **Blockchain Architects:** To discuss L1/L2 implementation strategies.
 
+---
+
+## VI. TECHNICAL APPENDIX: FORMAL DEFENSE AGAINST RE-ENTRANCY
+
+A major vulnerability in current DeFi is the **Re-entrancy attack** (e.g., The DAO Hack). In the Crystalline Protocol, this is physically impossible.
+
+### The Problem: Circularity
+In an exploit, Contract A calls Contract B, which calls back into A before the state update is final. Logically, this creates a set that contains itself in a state of flux:
+$$S_{t+1} \in S_t \text{ and } S_t \text{ is not yet defined.}$$
+
+### The Solution: Axiom of Regularity
+We apply the **Axiom of Regularity**:
+$$\forall x (x \neq \emptyset \implies \exists y \in x (y \cap x = \emptyset))$$
+
+In the CVM, the dependency graph of any transaction must be a **Directed Acyclic Graph (DAG)**.
+1. The SAT-solver checks the transition $\Delta$ against the current state $S_t$.
+2. If $\Delta$ attempts to create a membership cycle ($A \in B$ and $B \in A$), it violates the axiom.
+3. The transaction is rejected as a **Logical Impossibility** ($\bot$).
+
+**The system doesn't "detect a hack"; it simply refuses to exist in an inconsistent state.**
+
 ## Citation
 
 https://zenodo.org/records/18147709
