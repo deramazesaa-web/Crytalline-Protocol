@@ -87,6 +87,21 @@ The CVM is not a standard executor; it is an **Automated Theorem Prover**.
 
 ---
 
+## 3.1. Deontic Logic Interface (The Language of Intent)
+
+The CVM translates high-level AI intents into **Standard Deontic Logic (SDL)**. This allows the Super-Subject to define normative constraints that are mathematically enforceable.
+
+- **Operator $O(p)$ (Obligation):** Actions the agent *must* perform (e.g., maintaining a collateral ratio).
+- **Operator $P(p)$ (Permission):** Actions the agent *is allowed* to perform within the sandbox.
+- **Operator $F(p)$ (Prohibition):** Hard boundaries that the CVM will block at the logical level.
+
+### Example: Automated Debt Management
+In a Crystalline-based DeFi vault, the rule is not a line of code, but a logical predicate:
+$$O(\text{repay}) \leftarrow (\text{collateral} < \text{threshold})$$
+
+If an AI agent attempts to execute a dividend distribution while an Obligation ($O$) to repay debt is active, the CVM detects a **Deontic Conflict**. Since $O(p) \implies \neg P(\neg p)$, the distribution is rejected as a logical contradiction.
+---
+
 ## IV. TECHNICAL PROOF: PREVENTING RE-ENTRANCY
 
 A major vulnerability in current DeFi is the **Re-entrancy attack**. In the Crystalline Protocol, this is blocked by the **Axiom of Regularity (Foundation)**:
