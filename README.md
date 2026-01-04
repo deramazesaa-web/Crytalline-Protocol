@@ -118,7 +118,7 @@ This protocol is the result of a 5-year research effort into axiomatic governanc
 **Contact:** [Your Contact Info]
 ---
 
-## VI. TECHNICAL APPENDIX: FORMAL DEFENSE AGAINST RE-ENTRANCY
+## VII. TECHNICAL APPENDIX: FORMAL DEFENSE AGAINST RE-ENTRANCY
 
 A major vulnerability in current DeFi is the **Re-entrancy attack** (e.g., The DAO Hack). In the Crystalline Protocol, this is physically impossible.
 
