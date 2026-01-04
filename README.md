@@ -46,8 +46,7 @@ We are looking for:
 
 ## Citation
 
-If you use this research in your work, please cite the Zenodo publication:
-`[Link to your Zenodo paper here]`
+https://zenodo.org/records/18147709
 
 ---
 *Developed by a self-taught architect committed to the future of logical sovereignty.*
