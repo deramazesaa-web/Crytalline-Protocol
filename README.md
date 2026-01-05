@@ -88,6 +88,19 @@ In an exploit, a membership cycle is attempted ($A \in B$ and $B \in A$). The CV
 - [ ] **Phase 3: ZK-Prover Implementation** - Off-chain proof generation for axiomatic consistency.
 
 ---
+## 🛠 Proof of Concept: The Axiomatic Engine
+
+The repository contains a Rust-based implementation of the Crystalline VM (CVM) logic core.
+
+### Key Features:
+- **Formal Verification:** Uses ZF Set Theory axioms to validate state transitions.
+- **Regularity Check:** Prevents re-entrancy attacks by detecting logical cycles in the state graph.
+- **Declarative Security:** Safety is enforced by the mathematical structure of the state, not by smart contract code.
+
+### How to run locally:
+1. Install Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+2. Clone the repo.
+3. Run `cargo run`.
 
 ## Citation & Research
 This protocol is the result of long-term research into axiomatic governance and AI safety.
