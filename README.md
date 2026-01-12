@@ -27,7 +27,7 @@ We define the Global State Space $\Omega$ as the set of all possible market cond
 
 Our engine performs a mapping: $f(w, a) \to \{Allowed, Denied\}$, ensuring that the chosen action $a$ leads to a state that satisfies the highest-priority set of constraints.
 
-### 1. Deontic Logic Implementation
+### 1.2 Deontic Logic Implementation
 The protocol uses a priority-weighted deontic calculus to resolve conflicts between normative modalities:
 - **Prohibition ($P$):** $\neg Allowed(action)$ if $Condition(w)$ is met.
 - **Obligation ($O$):** $Must(action)$ if $Condition(w)$ is critical.
