@@ -1,3 +1,4 @@
+pub mod deontic_engine;
 /* * CRYSTALLINE PROTOCOL: Proof of Concept (v0.1.0)
  * -----------------------------------------------
  * This PoC demonstrates the "Logic Firewall" mechanism.
