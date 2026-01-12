@@ -16,6 +16,26 @@ The **Crystalline Protocol** is a formal framework for creating **Super-Subjects
 ### Why ZF Set Theory?
 Most blockchains treat transactions as isolated state changes. Crystalline treats the entire system as a **Formal Set**. By enforcing ZF-axioms at the Virtual Machine (CVM) level, we ensure that a state transition is rejected if it introduces a logical contradiction ($\bot$).
 
+## Formal Mathematical Framework
+
+### 1.1 Set-Theoretic Foundation (ZF)
+We define the Global State Space $\Omega$ as the set of all possible market conditions.
+- **WorldState $W$**: An element $w \in \Omega$, where $w$ is defined by a tuple of parameters (Collateral, Slippage, Volatility).
+- **Subsets of Validity**: 
+    - $S_{valid} \subseteq \Omega$: States where no prohibitions are violated.
+    - $S_{emergency} \subseteq \Omega$: States where survival axioms must override standard constraints.
+
+Our engine performs a mapping: $f(w, a) \to \{Allowed, Denied\}$, ensuring that the chosen action $a$ leads to a state that satisfies the highest-priority set of constraints.
+
+### 1. Deontic Logic Implementation
+The protocol uses a priority-weighted deontic calculus to resolve conflicts between normative modalities:
+- **Prohibition ($P$):** $\neg Allowed(action)$ if $Condition(w)$ is met.
+- **Obligation ($O$):** $Must(action)$ if $Condition(w)$ is critical.
+
+**Conflict Resolution Axiom:**
+If an action $a$ is simultaneously $P(a)$ and $O(a)$, the engine resolves the paradox by comparing the priority weights $W_p$ and $W_o$:
+$$\text{Decision} = \begin{cases} Allowed, & \text{if } W_o \geq W_p \\ Denied, & \text{if } W_p > W_o \end{cases}$$
+
 ---
 
 ## 2. Formal Architecture
