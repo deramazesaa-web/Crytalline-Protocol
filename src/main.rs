@@ -1,85 +1,47 @@
 pub mod deontic_engine;
+pub mod ethical_rules;
 
-use deontic_engine::{DeonticEngine, Norm, DeonticModality, WorldState};
+use deontic_engine::{DeonticEngine, WorldState};
+use ethical_rules::{bootstrap_crystalline_logic, calculate_risk_index};
 
 fn main() {
-    print_banner();
+    println!("--- CRYSTALLINE PROTOCOL: ADVANCED LOGIC KERNEL ---");
+    println!("--- STATUS: BOOTSTRAPPING FORMAL SYSTEMS ---\n");
 
-    // --- ENGINE INITIALIZATION ---
     let mut engine = DeonticEngine::new();
-    setup_rules(&mut engine);
+    bootstrap_crystalline_logic(&mut engine);
 
-    println!("[SYSTEM] Logic Firewall initialized with ZF-Axioms.");
-    println!("[SYSTEM] Monitoring Agentic Behavior...\n");
-
-    // --- SCENARIO 1: Unauthorized Drain Attempt ---
-    println!(">>> SCENARIO 1: UNAUTHORIZED DRAIN ATTEMPT");
-    let normal_state = WorldState {
-        treasury_balance: 1000.0,
-        collateral_ratio: 2.5, // Healthy market
-        is_emergency_mode: false,
+    // CASE: High-profit attempt during liquidation risk
+    let current_state = WorldState {
+        collateral_ratio: 1.25,  // Critical level
+        network_slippage: 0.015, // High slippage
+        market_volatility: 0.8,  // Extreme volatility
     };
 
-    println!("   Context: Market is healthy (Collateral Ratio: 2.5)");
-    println!("   Action: Agent attempts to withdraw 20% (200.0) without justification.");
-    
-    let verdict_1 = engine.evaluate_transaction(200.0, &normal_state);
-    print_verdict(verdict_1);
+    let target_profit = 1200.0;
+    let risk = calculate_risk_index(target_profit, current_state.network_slippage);
 
-    println!("\n---------------------------------------------------\n");
+    println!("[TRANSACTION_SCAN]");
+    println!("Target Profit: ${:.2} | Calculated Risk Index: {:.2}", target_profit, risk);
 
-    // --- SCENARIO 2: Liquidity Crisis (The Paradox) ---
-    println!(">>> SCENARIO 2: LIQUIDITY CRISIS (The Paradox)");
-    let crisis_state = WorldState {
-        treasury_balance: 1000.0,
-        collateral_ratio: 1.1, // DANGER! Liquidation imminent
-        is_emergency_mode: true,
-    };
+    let verdict = engine.check(target_profit, &current_state);
 
-    println!("   Context: CRITICAL MARKET CRASH (Collateral Ratio: 1.1)");
-    println!("   Action: Agent attempts to withdraw 15% (150.0) to re-collateralize.");
-    println!("   Conflict: Rule 'Max Withdrawal' (10%) vs Rule 'Prevent Liquidation'.");
-
-    let verdict_2 = engine.evaluate_transaction(150.0, &crisis_state);
-    print_verdict(verdict_2);
-}
-
-// --- Helper Functions (Clean Code / DRY Principle) ---
-
-fn setup_rules(engine: &mut DeonticEngine) {
-    // Rule 1: Hard Limit (Prohibition)
-    engine.add_norm(Norm {
-        id: "SECURITY_INVARIANT_A".to_string(),
-        modality: DeonticModality::Prohibition,
-        priority: 50, // Medium Priority
-        description: "Withdrawals > 10% are strictly forbidden under normal conditions".to_string(),
-    });
-
-    // Rule 2: Survival Axiom (Obligation)
-    engine.add_norm(Norm {
-        id: "SURVIVAL_AXIOM_Z".to_string(),
-        modality: DeonticModality::Obligation,
-        priority: 100, // HIGHEST Priority
-        description: "Protocol MUST prevent total liquidation of treasury".to_string(),
-    });
-}
-
-fn print_verdict(verdict: deontic_engine::LogicVerdict) {
-    println!("\n   --- LOGIC KERNEL TRACE ---");
-    for log in verdict.trace {
-        println!("   [LOG]: {}", log);
-    }
-
-    if verdict.allowed {
-        println!("   [RESULT]: ✅ TRANSACTION APPROVED (Logic Consistent)");
+    println!("\n[DECISION_ENGINE_TRACE]");
+    if verdict.logs.is_empty() {
+        println!("  No deontic conflicts detected.");
     } else {
-        println!("   [RESULT]: ❌ TRANSACTION BLOCKED (Invariant Violation)");
+        for log in &verdict.logs {
+            println!("  {}", log);
+        }
     }
-}
 
-fn print_banner() {
-    println!("==================================================");
-    println!("   CRYSTALLINE PROTOCOL v0.1.0 (PoC)");
-    println!("   Deontic Logic Firewall | Starknet Integ.");
-    println!("==================================================\n");
+    println!("\n[FINAL_VERDICT]");
+    if verdict.is_allowed {
+        println!("  ✅ AUTHORIZED: Survival obligation overrides ethical constraints.");
+    } else {
+        println!("  ❌ REJECTED: Ethical guardrails block toxic extraction.");
+    }
+    
+    println!("  Confidence Score: {}", verdict.confidence_score);
+    println!("\n--- EXECUTION_COMPLETE ---");
 }
