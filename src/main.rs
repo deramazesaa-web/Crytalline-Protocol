@@ -1,47 +1,49 @@
 pub mod deontic_engine;
 pub mod ethical_rules;
+pub mod market_data; // Register the new module
 
-use deontic_engine::{DeonticEngine, WorldState};
+use deontic_engine::DeonticEngine;
 use ethical_rules::{bootstrap_crystalline_logic, calculate_risk_index};
+use market_data::SimulatedOracle;
 
 fn main() {
-    println!("--- CRYSTALLINE PROTOCOL: ADVANCED LOGIC KERNEL ---");
-    println!("--- STATUS: BOOTSTRAPPING FORMAL SYSTEMS ---\n");
-
+    println!("--- CRYSTALLINE PROTOCOL v0.3.0: ORACLE INTEGRATION ---");
+    
+    // 1. Initialize Components
     let mut engine = DeonticEngine::new();
     bootstrap_crystalline_logic(&mut engine);
+    
+    let oracle = SimulatedOracle::new("Starknet_Pragma_Feed");
 
-    // CASE: High-profit attempt during liquidation risk
-    let current_state = WorldState {
-        collateral_ratio: 1.25,  // Critical level
-        network_slippage: 0.015, // High slippage
-        market_volatility: 0.8,  // Extreme volatility
-    };
+    // 2. Simulate Scenario: MARKET CRASH
+    println!("\n>>> SCENARIO: DETECTING MARKET ANOMALY");
+    let current_state = oracle.fetch_live_state("CRASH");
 
-    let target_profit = 1200.0;
-    let risk = calculate_risk_index(target_profit, current_state.network_slippage);
+    println!("[MARKET_DATA]");
+    println!("  Volatility: {:.2}", current_state.market_volatility);
+    println!("  Collateral: {:.2}", current_state.collateral_ratio);
 
-    println!("[TRANSACTION_SCAN]");
-    println!("Target Profit: ${:.2} | Calculated Risk Index: {:.2}", target_profit, risk);
+    // 3. Define Action
+    let target_profit = 1500.0;
+    let risk_score = calculate_risk_index(target_profit, current_state.network_slippage);
+    
+    println!("[RISK_ASSESSMENT]");
+    println!("  Calculated Risk Score: {:.4}", risk_score);
 
+    // 4. Execute Logic
     let verdict = engine.check(target_profit, &current_state);
 
-    println!("\n[DECISION_ENGINE_TRACE]");
-    if verdict.logs.is_empty() {
-        println!("  No deontic conflicts detected.");
-    } else {
-        for log in &verdict.logs {
-            println!("  {}", log);
-        }
+    println!("\n[LOGIC_KERNEL_OUTPUT]");
+    for log in &verdict.logs {
+        println!("  {}", log);
     }
 
-    println!("\n[FINAL_VERDICT]");
+    println!("\n[FINAL_CONSENSUS]");
     if verdict.is_allowed {
-        println!("  ✅ AUTHORIZED: Survival obligation overrides ethical constraints.");
+        println!("  ✅ TRANSACTION APPROVED (Priority Override)");
     } else {
-        println!("  ❌ REJECTED: Ethical guardrails block toxic extraction.");
+        println!("  ❌ TRANSACTION BLOCKED (Safety Violation)");
     }
     
-    println!("  Confidence Score: {}", verdict.confidence_score);
-    println!("\n--- EXECUTION_COMPLETE ---");
+    println!("--------------------------------------------------");
 }
