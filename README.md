@@ -86,13 +86,27 @@ $$\forall x (x \neq \emptyset \implies \exists y \in x (y \cap x = \emptyset))$$
 
 In an exploit, a membership cycle is attempted ($A \in B$ and $B \in A$). The CVM detects this cycle as a violation of the Axiom of Regularity and prunes the transaction. 
 
-
-
 **The system doesn't "detect a hack"; it refuses to exist in an inconsistent state.**
 
 ---
 
-## 5. Glossary of Terms
+## 5. Why Crystalline? (The Competitive Edge)
+
+Traditional DeFi protocols (Aave, Uniswap, Compound) operate on **Imperative Logic**—rigid "if-then" rules that are blind to market context and ethical nuances. Crystalline Protocol introduces **Deontic Governance**, shifting from "dumb code" to "aware systems."
+
+### 1. Context-Aware Liquidity Protection
+Unlike standard protocols that trigger liquidations blindly (often worsening market crashes), Crystalline distinguishes between **Market Noise** and **Systemic Collapse**. Using Set Theory boundaries, it can pause toxic extractions while prioritizing protocol solvency in real-time.
+
+### 2. Built-in Ethical MEV Guardrails
+In the current "Dark Forest" of Ethereum, MEV bots exploit users legally because the code allows it. Crystalline implements **Prohibitive Modalities** that treat predatory slippage as a logical violation. It’s not just about what is *technically possible*, but what is *normatively acceptable*.
+
+### 3. Instant Governance (vs. Slow DAOs)
+Human-led DAOs take days to vote on risk parameters. Crystalline’s **Conflict Resolver** acts as a "Real-time AI Auditor," switching between safety and survival modes in the same block the danger is detected.
+
+### 4. Machine-Readable Audit Trails
+Every decision generates a `FormalProof`. For institutional investors, this transforms the "Black Box" of DeFi into a transparent, verifiable, and legally auditable framework.
+
+## 6. Glossary of Terms
 
 * **Super-Subject:** A digital entity with a unified logical identity and axiomatic boundaries.
 * **Logical Entropy:** The accumulation of contradictory rules in a governance system.
@@ -101,7 +115,7 @@ In an exploit, a membership cycle is attempted ($A \in B$ and $B \in A$). The CV
 
 ---
 
-## 6. Roadmap
+## 7. Roadmap
 
 - [x] **Phase 1: Formal Foundation** (Current) - Mapping ZF-axioms to state-space.
 - [ ] **Phase 2: CVM Instruction Set** - Translating logical operators to opcodes.
