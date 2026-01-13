@@ -1,3 +1,13 @@
+![Rust](https://img.shields.io/badge/language-Rust-orange.svg)
+![License](https://img.shields.io/badge/license-MIT-blue.svg)
+![Deontic Logic](https://img.shields.io/badge/Logic-Deontic-green.svg)
+![Status](https://img.shields.io/badge/Status-In--Development-yellow.svg)
+
+# 💎 Crystalline Protocol
+
+**Autonomous Deontic Logic Engine for Next-Gen DeFi.**
+
+[Explore Roadmap](./ROADMAP.md) | [Report Bug](https://github.com/deramazesaa-web/Crystalline-Protocol/issues)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18147709.svg)](https://doi.org/10.5281/zenodo.18147709)
 # Crystalline Protocol: Axiomatic Governance Standard
 **Replacing "Code is Law" with "Logic is Physics" via ZF Set Theory**
