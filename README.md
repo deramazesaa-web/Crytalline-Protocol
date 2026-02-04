@@ -17,6 +17,24 @@
 
 ---
 
+# Crystalline Protocol: Axiomatic Layer 0/1/2 Specification
+
+> **Operational Status:** Bootstrap Phase.
+> **Author Identity:** Digital Ghost (Jurisdiction: Undisclosed).
+> **Objective:** Formal Synthesis & Secure Migration.
+
+---
+
+## Executive Summary
+Crystalline is a Distributed Deductive Engine based on **Zermelo-Fraenkel (ZF) set theory**. It replaces probabilistic consensus with axiomatic verification, rendering state inconsistencies, double-spends, and re-entrancy exploits ontologically impossible.
+
+### High-Level Architecture:
+* **Layer 0 (The Foundation):** Universal ZF-invariants. Security through mathematical impossibility.
+* **Layer 1 (The Logic Filter):** Ternary state partitioning (Allowed/Forbidden/Conditional). Smart contracts as static predicates.
+* **Layer 2 (The Projection):** Power Set projections for light clients and cross-chain interoperability.
+
+---
+
 ## 1. The Core Thesis: Beyond "Governance Slime"
 
 Traditional decentralized systems (DAOs) and AI-driven entities suffer from **Logical Entropy**. As rules, upgrades, and proposals accumulate, the system inevitably enters a state of **"Governance Slime"**—a phase where internal contradictions make the state-space undecidable and vulnerable to exploitation.
