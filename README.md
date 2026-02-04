@@ -7,28 +7,6 @@
 
 **Autonomous Deontic Logic Engine for Next-Gen DeFi.**
 
-graph LR
-    subgraph Input
-    A[Market Oracle]
-    B[Axiom Set]
-    end
-
-    subgraph Core_Logic
-    C{Deontic Engine}
-    D{Axiom of Choice Resolver}
-    end
-
-    subgraph Output
-    E[State Commitment]
-    F[ZK-Proof Witness]
-    end
-
-    A --> C
-    B --> C
-    C --> D
-    D --> E
-    E --> F
-
 [Explore Roadmap](./ROADMAP.md) | [Report Bug](https://github.com/deramazesaa-web/Crystalline-Protocol/issues)
 [![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.18147709.svg)](https://doi.org/10.5281/zenodo.18147709)
 # Crystalline Protocol: Axiomatic Governance Standard
