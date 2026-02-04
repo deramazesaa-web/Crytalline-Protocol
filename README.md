@@ -166,6 +166,18 @@ $$\forall A (A \neq \emptyset \implies \exists x \in A (x \cap A = \emptyset))$$
 1. **Anti-Cyclic State Transitions:** Regularity forbids any state $x$ from containing itself as a member ($x \notin x$). This eliminates recursive state-dependency exploits.
 2. **Re-entrancy Prevention:** Every transaction $\tau$ must result in a set of state changes that are disjoint from the initiating state's pending transitions. Circular calls that attempt to modify a state before its parent transition is finalized are rejected as ill-founded.
 3. **Deterministic Termination:** By prohibiting infinite descending chains of membership, the protocol ensures that every proof of validity is finite and computable.
+
+### 2.4.2 Axiom of Extensionality: Identity and Malleability Resistance
+
+The protocol utilizes the Axiom of Extensionality to define the identity of any state element or transaction based solely on its internal constituents.
+
+**Formal Constraint:**
+$$\forall x \forall y (\forall z (z \in x \iff z \in y) \implies x = y)$$
+
+**Application in Crystalline:**
+1. **Immutable Identity:** A transaction's identity is derived from its logical elements ($z$), not its metadata. This inherently eliminates Transaction Malleability.
+2. **Global Deduplication:** The state engine ensures that no two distinct sets with identical elements can exist simultaneously. This forces a canonical representation of the global state at all times.
+3. **Verification of Equivalence:** Logic-based verification allows the protocol to confirm that a proposed state change is unique. If a transition is found to be extensionally equal to an existing state, it is treated as a redundant operation, preventing state bloat and "replay" attempts at the logic level.
 ---
 
 ## 3. Security Properties
