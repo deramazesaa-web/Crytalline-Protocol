@@ -62,7 +62,14 @@ The protocol uses a priority-weighted deontic calculus to resolve conflicts betw
 
 **Conflict Resolution Axiom:**
 If an action $a$ is simultaneously $P(a)$ and $O(a)$, the engine resolves the paradox by comparing the priority weights $W_p$ and $W_o$:
-$$\text{Decision} = \begin{cases} Allowed, & \text{if } W_o \geq W_p \\ Denied, & \text{if } W_p > W_o \end{cases}$$
+
+$$
+\text{Decision} = 
+\begin{cases} 
+\text{Allowed}, & \text{if } W_o \geq W_p \\ 
+\text{Denied}, & \text{if } W_p > W_o 
+\end{cases}
+$$
 
 ---
 
