@@ -8,6 +8,7 @@ mod proof;
 mod resolver;
 mod market_data;
 mod errors;
+use crate::errors::{CrystallineError, CrystallineResult};
 
 // Imports
 use crate::axiomatics::AxiomaticState;
