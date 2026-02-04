@@ -1,11 +1,22 @@
-#[derive(Debug, Clone)]
+/*
+ * CRYSTALLINE PROTOCOL: CONFLICT RESOLVER (LAYER 0/1)
+ * --------------------------------------------------
+ * Implements the Axiom of Choice to resolve non-deterministic states.
+ * Uses Logical Density to collapse multiple possibilities into a single truth.
+ */
+
+use crate::axiomatics::AxiomaticEngine;
+use crate::proof::FormalProof;
+
+/// Strategies for resolving logical conflicts in the state manifold.
 pub enum ResolutionStrategy {
-    StandardWeighted, // Mathematical comparison of weights (W_obl >= W_pro)
-    StrictSafety,     // Any prohibition blocks the action (Veto power)
+    HighestDensity, // Axiom of Choice based on proof weight
+    TemporalOrder,  // Fallback to time-priority
+    EthicsWeighted, // Priority based on ethical impact scores
 }
 
 pub struct ConflictResolver {
-    strategy: ResolutionStrategy,
+    pub strategy: ResolutionStrategy,
 }
 
 impl ConflictResolver {
@@ -13,30 +24,35 @@ impl ConflictResolver {
         Self { strategy }
     }
 
-    /// Arbitrates between the necessity of action (Obligation) and the restriction (Prohibition).
-    pub fn resolve(&self, obligation_weight: u32, prohibition_weight: u32) -> ResolutionResult {
+    /// Axiom of Choice Implementation:
+    /// Collapses a set of conflicting proofs into a single winning state.
+    /// Formalism: ∀X (∅ ∉ X → ∃f: X → ∪X)
+    pub fn select_winning_proof(&self, conflicts: Vec<FormalProof>) -> Option<FormalProof> {
+        if conflicts.is_empty() {
+            return None;
+        }
+
         match self.strategy {
-            ResolutionStrategy::StandardWeighted => {
-                // Classic Logic: Higher priority wins
-                if obligation_weight >= prohibition_weight {
-                    ResolutionResult::Allowed("Obligation outweighs Prohibition".to_string())
-                } else {
-                    ResolutionResult::Denied("Prohibition weight too high".to_string())
-                }
+            ResolutionStrategy::HighestDensity => {
+                // Use Layer 0 Axiomatic Choice to find the max density
+                AxiomaticEngine::resolve_choice(conflicts, |p| p.density)
             },
-            ResolutionStrategy::StrictSafety => {
-                // Paranoid Logic: If forbidden at all, do not proceed
-                if prohibition_weight > 0 {
-                    ResolutionResult::Denied("Strict Safety Mode: Zero-tolerance for prohibitions".to_string())
-                } else {
-                    ResolutionResult::Allowed("No prohibitions detected".to_string())
-                }
+            _ => {
+                // Defaulting to the first element if strategy is not density-based
+                conflicts.into_iter().next()
             }
         }
     }
+
+    /// Verifies if a resolved state maintains the Axiom of Regularity.
+    pub fn finalize_resolution(&self, winner: &FormalProof) -> bool {
+        // A proof is only final if it's verified and has non-zero density
+        winner.is_verified && winner.density > 0
+    }
 }
 
-pub enum ResolutionResult {
-    Allowed(String),
-    Denied(String),
+/// Represents a set of overlapping state transitions requiring resolution.
+pub struct ConflictSet {
+    pub transaction_ids: Vec<String>,
+    pub proofs: Vec<FormalProof>,
 }
