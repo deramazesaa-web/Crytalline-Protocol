@@ -68,3 +68,55 @@ impl ConflictResolver {
         if a.priority >= b.priority { a.clone() } else { b.clone() }
     }
 }
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+    use crate::deontic_engine::DeonticModality;
+
+    #[test]
+    fn test_conflict_resolution_logic() {
+        let resolver = ConflictResolver::new();
+        
+        let high_priority_rule = Rule {
+            id: 1,
+            description: "High Priority".to_string(),
+            modality: DeonticModality::Obligatory,
+            priority: 900,
+        };
+
+        let low_priority_rule = Rule {
+            id: 2,
+            description: "Low Priority".to_string(),
+            modality: DeonticModality::Prohibited,
+            priority: 100,
+        };
+
+        let result = resolver.resolve(&high_priority_rule, &low_priority_rule).unwrap();
+        
+        // Assert that the high priority rule always wins
+        assert_eq!(result.winning_rule.id, 1);
+    }
+
+    #[test]
+    fn test_priority_overflow_error() {
+        let resolver = ConflictResolver::new();
+        let invalid_rule = Rule {
+            id: 99,
+            description: "Invalid".to_string(),
+            modality: DeonticModality::Obligatory,
+            priority: 5000, // Above limit
+        };
+        let normal_rule = Rule {
+            id: 1,
+            description: "Normal".to_string(),
+            modality: DeonticModality::Obligatory,
+            priority: 500,
+        };
+
+        let result = resolver.resolve(&invalid_rule, &normal_rule);
+        
+        // Assert that it returns an Error, not a Result
+        assert!(result.is_err());
+    }
+}
