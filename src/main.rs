@@ -56,14 +56,24 @@ fn main() {
 
     println!("\n[RESOLVER] Processing via Logic Gate...");
     
+    // Processing the resolution result
     match resolution.winning_rule {
         Some(rule) => {
             println!("   -> WINNER: Rule ID #{}", rule.id);
             println!("   -> ACTION: {}", rule.description);
             println!("   -> REASON: {}", resolution.resolved_by);
+            
+            // NEW: Persist the decision into the global state
+            // Note: axiomatic_system must be declared as 'let mut' to allow state updates
+            axiomatic_system.commit_rule(rule); 
         },
-        None => println!("   -> No conflict or tie."),
+        None => {
+            println!("   -> No conflict or tie identified.");
+        }
     }
+    
+    // Final state verification
+    axiomatic_system.get_status();
 
     if let ConflictType::LogicalContradiction = resolution.conflict_type {
         println!("[ALERT] Logical Contradiction handled safely without system crash.");
