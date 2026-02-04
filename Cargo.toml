@@ -1,6 +1,15 @@
 [package]
-name = "crystalline_poc"
+name = "crystalline-protocol"
 version = "0.1.0"
 edition = "2021"
+authors = ["Digital Ghost"]
+description = "Axiomatic Distributed Deductive Engine based on ZF Set Theory"
 
 [dependencies]
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+schemars = "0.8"
+cw-storage_plus = "1.0"
+
+[dev-dependencies]
+cargo-test-macro = "0.1"
