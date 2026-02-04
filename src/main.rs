@@ -7,6 +7,7 @@ mod ethical_rules;
 mod proof;
 mod resolver;
 mod market_data;
+mod errors;
 
 // Imports
 use crate::axiomatics::AxiomaticState;
