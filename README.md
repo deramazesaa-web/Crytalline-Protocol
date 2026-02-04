@@ -137,11 +137,12 @@ Most protocols rely on **Probabilistic Finality** (trusting that the majority is
 The core is written in **Rust** to ensure memory safety and zero-cost abstractions for the axiomatic engine.
 
 ### Run Axiomatic Verification
+
 To verify the logical integrity of the protocol, run the built-in formal tests:
 
 ```bash
 # Clone the repository
-git clone [https://github.com/deramazesaa-web/Crystalline-Protocol.git](https://github.com/deramazesaa-web/Crystalline-Protocol.git)
+git clone https://github.com/deramazesaa-web/Crystalline-Protocol.git
 
 # Navigate to directory
 cd Crystalline-Protocol
