@@ -343,6 +343,8 @@ We provide a unified script that builds the project, runs the entire axiomatic t
 chmod +x scripts/run_all.sh
 ./scripts/run_all.sh
 
+---
+
 ## Citation & Research
 This protocol is the result of long-term research into axiomatic governance and AI safety.
 
