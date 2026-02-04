@@ -35,17 +35,6 @@ Crystalline is a Distributed Deductive Engine based on **Zermelo-Fraenkel (ZF) s
 
 ---
 
-graph TD
-    A[Market Data Oracle] -->|Volatility Logic| B(Deontic Engine)
-    C[Governance Axioms] -->|Set Theory Constraints| B
-    B -->|Logical Conflict| D{Axiom of Choice Resolver}
-    D -->|Success| E[Axiomatic State Commitment]
-    D -->|Failure| F[Crystalline Error Handling]
-    E -->|Witness Generation| G[Cryptographic Proof]
-    G -->|Verification| H[Finalized Epoch]
-
----
-
 ## 1. The Core Thesis: Beyond "Governance Slime"
 
 Traditional decentralized systems (DAOs) and AI-driven entities suffer from **Logical Entropy**. As rules, upgrades, and proposals accumulate, the system inevitably enters a state of **"Governance Slime"**—a phase where internal contradictions make the state-space undecidable and vulnerable to exploitation.
