@@ -118,22 +118,47 @@ In an exploit, a membership cycle is attempted ($A \in B$ and $B \in A$). The CV
 
 ---
 
-## 5. Why Crystalline? (The Competitive Edge)
+## ⚔️ Comparative Ontology: Why Crystalline?
 
-Traditional DeFi protocols (Aave, Uniswap, Compound) operate on **Imperative Logic**—rigid "if-then" rules that are blind to market context and ethical nuances. Crystalline Protocol introduces **Deontic Governance**, shifting from "dumb code" to "aware systems."
+Most protocols rely on **Probabilistic Finality** (trusting that the majority is honest). Crystalline Protocol introduces **Axiomatic Finality** — where state transitions are governed by the immutable laws of mathematical sets.
 
-### 1. Context-Aware Liquidity Protection
-Unlike standard protocols that trigger liquidations blindly (often worsening market crashes), Crystalline distinguishes between **Market Noise** and **Systemic Collapse**. Using Set Theory boundaries, it can pause toxic extractions while prioritizing protocol solvency in real-time.
+| Feature | Legacy Blockchains (PoW/PoS) | Crystalline Protocol |
+| :--- | :--- | :--- |
+| **Foundation** | Social Consensus / Game Theory | ZF-Set Theory Axiomatics |
+| **Finality** | Probabilistic (Wait for *n* blocks) | Deterministic (Instant Axiomatic Fit) |
+| **Security** | Economic Cost of Attack ($) | Logical Impossibility of Violation (∞) |
+| **Conflict Resolution** | Longest Chain / Voting | Axiom of Choice (Logical Density) |
+| **State Validation** | Global Redundancy (Everyone checks) | Formal Proof Verification ($\pi$ Witness) |
 
-### 2. Built-in Ethical MEV Guardrails
-In the current "Dark Forest" of Ethereum, MEV bots exploit users legally because the code allows it. Crystalline implements **Prohibitive Modalities** that treat predatory slippage as a logical violation. It’s not just about what is *technically possible*, but what is *normatively acceptable*.
+---
 
-### 3. Instant Governance (vs. Slow DAOs)
-Human-led DAOs take days to vote on risk parameters. Crystalline’s **Conflict Resolver** acts as a "Real-time AI Auditor," switching between safety and survival modes in the same block the danger is detected.
+## 🏗️ The "No-Team" Manifesto
+*In response to the "go find a team on LinkedIn" advice:*
 
-### 4. Machine-Readable Audit Trails
-Every decision generates a `FormalProof`. For institutional investors, this transforms the "Black Box" of DeFi into a transparent, verifiable, and legally auditable framework.
+Crystalline Protocol is not a "startup"; it is a **mathematical discovery**. 
 
+1. **Code is Law:** We don't need 50 developers to vote on what is true. The **Axiom of Regularity** already decided that.
+2. **Lean Architecture:** By using Rust and Formal Logic, we eliminate 90% of the "bloatware" and human error found in legacy systems.
+3. **Execution over Management:** While others are busy in "team-building" meetings, Crystalline is executing state transitions that are provably correct. We don't build teams; we build Truth.
+
+---
+
+## 🛠️ Technical Stack & Verification
+
+The core is written in **Rust** to ensure memory safety and zero-cost abstractions for the axiomatic engine.
+
+### Run Axiomatic Verification
+To verify the logical integrity of the protocol, run the built-in formal tests:
+
+```bash
+# Clone the repository
+git clone [https://github.com/deramazesaa-web/Crystalline-Protocol.git](https://github.com/deramazesaa-web/Crystalline-Protocol.git)
+
+# Navigate to directory
+cd Crystalline-Protocol
+
+# Execute Axiomatic Tests
+cargo test
 ## 6. Glossary of Terms
 
 * **Super-Subject:** A digital entity with a unified logical identity and axiomatic boundaries.
