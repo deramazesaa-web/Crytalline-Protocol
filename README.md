@@ -249,6 +249,31 @@ Layer 1 implements a ternary decision manifold for every proposed transition $\t
    A transition in $\mathbb{R}$ remains in a state of "logical potential" until $\pi$ is provided, at which point it is reassigned to $\mathbb{M}$ via the Axiom of Choice.
 ---
 
+# Crystalline Protocol: Axiomatic Layer 2 Specification
+
+## 1. Abstract: The Projection Layer
+Layer 2 (L2) is the interface between the formal axiomatic core and external observers. Its primary function is to generate compressed projections of the state using the Power Set Axiom, enabling high-speed data retrieval and cross-chain interoperability.
+
+## 2. Technical Mechanisms
+
+### 2.1 State Projections (Power Set Axiom)
+To prevent data bloat for end-users, L2 generates specific projections of the L1 state.
+$$\text{View}_{L2} \subseteq \mathcal{P}(\text{State}_{L1})$$
+This allows for "Selective Observability": users can verify their own balance or contract status without interacting with the entire axiomatic manifold.
+
+### 2.2 External Data Integration (Axiom of Infinity)
+L2 handles asynchronous data streams from external oracles. These streams are formalized as infinite sets of propositions that feed into the Conditional Set ($\mathbb{R}$) of Layer 1.
+* **Mechanism:** External events are converted into witnesses ($\pi$) that satisfy pending L1 predicates.
+
+### 2.3 Formal Interoperability (Cross-Chain Proofs)
+Layer 2 functions as a translator. It can export the internal ZF-proofs of Crystalline into formats readable by other systems (e.g., zk-SNARKs for Ethereum or IBC for Cosmos). 
+* **Key Advantage:** Since the proof is based on set theory, it is "Universal Math" that any formal verification system can understand.
+
+## 3. L2 Operational Roles
+1. **Light Clients:** Providing mathematically guaranteed state views with near-zero resource consumption.
+2. **Oracle Synthesis:** Bridging the gap between the "Closed World" of axioms and the "Open World" of external information.
+3. **Privacy Shields:** Using the Axiom of Specification to hide elements of a set while proving the set's overall properties (Axiomatic Zero-Knowledge).
+
 ## 4. Operational & Funding Status
 
 The author is currently operating as a "Digital Ghost" from a jurisdiction without physical address registries or formal legal recognition. 
