@@ -231,11 +231,22 @@ Layer 1 replaces imperative programming with Constraint-Based Logic.
 2. **Logic-Level Security:** Re-entrancy is impossible due to the Axiom of Regularity enforcing a strict hierarchy of calls.
 3. **No Garbage State:** A transaction that does not satisfy $P_{L1}$ is ontologically void and occupies no space in the state graph.
 
-## 3. Security Properties
+### 2.4 Three-Tier Logical Partitioning (Branching Logic)
 
-* **Exploit Immunity:** Re-entrancy and ill-founded loops are forbidden by the **Axiom of Regularity**: $A \cap x = \emptyset$.
-* **Censorship Resistance:** Validity is determined by mathematical derivation. If $\tau$ is logically consistent with $\mathbb{L}_0$, no central entity can invalidate it without violating the laws of the system itself.
+Layer 1 implements a ternary decision manifold for every proposed transition $\tau$. The Axiom of Specification partitions the state space into three disjoint subsets:
 
+1. **The Permitted Set ($\mathbb{M}$):**
+   Transactions that satisfy all application-specific predicates $P_{App}$. These are immediately integrated into the state.
+   $$\tau \in \mathbb{M} \iff P_{App}(\tau)$$
+
+2. **The Prohibited Set ($\mathbb{N}$):**
+   Transactions that violate axiomatic invariants (e.g., negative balances, re-entrancy). These transitions are ontologically void; they cannot exist within the Crystalline manifold.
+   $$\tau \in \mathbb{N} \iff \neg P_{App}(\tau)$$
+
+3. **The Conditional Set ($\mathbb{R}$):**
+   Transitions that are valid only in the presence of an auxiliary witness $\pi$ (e.g., cryptographic signatures, timestamps, or cross-shard proofs).
+   $$\tau \in \mathbb{R} \iff P_{App}(\tau, \pi)$$
+   A transition in $\mathbb{R}$ remains in a state of "logical potential" until $\pi$ is provided, at which point it is reassigned to $\mathbb{M}$ via the Axiom of Choice.
 ---
 
 ## 4. Operational & Funding Status
