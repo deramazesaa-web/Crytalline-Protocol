@@ -1,6 +1,5 @@
 // src/main.rs
 
-// Module declarations
 mod axiomatics;
 mod deontic_engine;
 mod ethical_rules;
@@ -8,83 +7,81 @@ mod proof;
 mod resolver;
 mod market_data;
 mod errors;
-use crate::errors::{CrystallineError, CrystallineResult};
 
-// Imports
 use crate::axiomatics::AxiomaticState;
 use crate::deontic_engine::{DeonticModality, Rule};
-use crate::resolver::{ConflictResolver, ConflictType};
+use crate::resolver::ConflictResolver;
 use crate::market_data::MarketOracle;
+use crate::proof::ProofGenerator;
 
 fn main() {
     println!("--------------------------------------------------");
     println!("   CRYSTALLINE PROTOCOL v0.1.0 (Genesis Node)     ");
-    println!("   System Boot: Initiating ZF-Axiomatic Logic     ");
+    println!("   Status: Operational | Mode: Multi-Epoch        ");
     println!("--------------------------------------------------");
 
-    // 1. Initialize System State
-    let axiomatic_system = AxiomaticState::new();
-    println!("[OK] Axiomatic Base Loaded. Depth: Recursive.");
-
-    // 2. Simulate Market Data Ingestion
-    let oracle = MarketOracle::new();
-    let current_price = oracle.fetch_price("ETH");
-    println!("[ORACLE] External feed active. Asset Price: ${}", current_price);
-
-    // 3. Define Competing Governance Rules (Simulation)
-    // Rule A: Market conditions suggest we MUST execute transaction
-    let rule_executive = Rule {
-        id: 101,
-        description: "Execute Liquidity Provision".to_string(),
-        modality: DeonticModality::Obligatory,
-        priority: 80, // High priority based on market opportunity
-    };
-
-    // Rule B: Security protocol SAYS NO due to volatility
-    let rule_security = Rule {
-        id: 102,
-        description: "Halt Trading (Volatility Protection)".to_string(),
-        modality: DeonticModality::Prohibited,
-        priority: 95, // Higher priority based on safety axiom
-    };
-
-    println!("\n[EVENT] Conflict Detected in Governance Queue:");
-    println!("   -> Rule A: {} (Priority: {})", rule_executive.description, rule_executive.priority);
-    println!("   -> Rule B: {} (Priority: {})", rule_security.description, rule_security.priority);
-
-    // 4. Resolve Conflict via Axiom of Choice
+    // Initialize core components
+    let mut axiomatic_system = AxiomaticState::new();
+    let mut oracle = MarketOracle::new();
     let resolver = ConflictResolver::new();
-    
-    // Handling the resolution with the new Error System
-    match resolver.resolve(&rule_executive, &rule_security) {
-        Ok(resolution) => {
-            println!("\n[RESOLVER] Logic Processed: {}", resolution.resolved_by);
-            println!("   -> WINNER: Rule ID #{}", resolution.winning_rule.id);
-            
-            // 4a. Commit to state
-            axiomatic_system.commit_rule(resolution.winning_rule.clone()); 
 
-            // 4b. Generate Proof (Step 1.2 & 2)
-            let proof = crate::proof::ProofGenerator::generate_proof(
-                &resolution.winning_rule, 
-                &axiomatic_system
-            );
-            println!("[SYSTEM] Proof generated: {}", proof.witness_hash);
+    // Simulate 3 business cycles (Epochs) to see the system in motion
+    for epoch in 1..=3 {
+        println!("\n>>> STARTING EPOCH #{} <<<", epoch);
 
-            // 4c. Immediate Verification check
-            if crate::proof::ProofGenerator::verify_proof(&proof, &axiomatic_system) {
-                println!("[SUCCESS] Decision verified by axiomatic verifier.");
-            } else {
-                println!("[FAILURE] Proof verification failed! State mismatch.");
+        // 1. Fetch live market data from the Oracle
+        let price = oracle.fetch_price("ETH");
+        let market_is_risky = oracle.is_volatile();
+
+        if market_is_risky {
+            println!("[WARNING] High volatility detected in Epoch #{}", epoch);
+        }
+
+        // 2. Define competing rules based on current market sentiment
+        let rule_executive = Rule {
+            id: 100 + epoch,
+            description: format!("Execute Trade at ${:.2}", price),
+            modality: DeonticModality::Obligatory,
+            priority: if market_is_risky { 40 } else { 90 }, // Trade priority drops during volatility
+        };
+
+        let rule_security = Rule {
+            id: 200 + epoch,
+            description: "Safety Buffer Activation".to_string(),
+            modality: DeonticModality::Prohibited,
+            priority: 75, // Security has a constant high threshold
+        };
+
+        // 3. Resolve conflict using the Axiom of Choice
+        match resolver.resolve(&rule_executive, &rule_security) {
+            Ok(resolution) => {
+                println!("[RESOLVER] Decision: {} (via {})", 
+                    resolution.winning_rule.description, resolution.resolved_by);
+                
+                // 4. Commit the winning rule to the global axiomatic state
+                axiomatic_system.commit_rule(resolution.winning_rule.clone());
+
+                // 5. Generate and verify a cryptographic proof
+                let proof = ProofGenerator::generate_proof(
+                    &resolution.winning_rule, 
+                    &axiomatic_system
+                );
+                
+                if ProofGenerator::verify_proof(&proof, &axiomatic_system) {
+                    println!("[SUCCESS] Proof verified: {}", proof.witness_hash);
+                } else {
+                    println!("[CRITICAL] Proof verification failed for witness {}", proof.witness_hash);
+                }
+            },
+            Err(e) => {
+                println!("[ERROR] Logic failure in Epoch #{}: {:?}", epoch, e);
             }
-        },
-        Err(e) => {
-            // This catches violations like PriorityOverflow or AxiomaticParadox
-            println!("\n[CRITICAL ERROR] Axiomatic violation detected: {:?}", e);
-            println!("[SYSTEM] Transaction rejected to maintain logical consistency.");
         }
     }
 
-    // 5. Verify Final System Status
-    println!("\n[FINALIZING EPOCH]");
+    // Final summary of the protocol's state
+    println!("\n--------------------------------------------------");
+    println!("   FINAL SYSTEM STATE SUMMARY                    ");
     axiomatic_system.get_status();
+    println!("--------------------------------------------------");
+}
