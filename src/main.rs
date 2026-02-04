@@ -1,55 +1,90 @@
-pub mod deontic_engine;
-pub mod ethical_rules;
-pub mod market_data;
-pub mod axiomatics;
-pub mod resolver;
-pub mod proof; // Register the final module
+/*
+ * CRYSTALLINE PROTOCOL: AXIOMATIC IMPLEMENTATION
+ * ---------------------------------------------------------
+ * Security through Zermelo-Fraenkel (ZF) Set Theory.
+ */
 
-use deontic_engine::DeonticEngine;
-use ethical_rules::{bootstrap_crystalline_logic, calculate_risk_index};
-use market_data::SimulatedOracle;
-use axiomatics::validate_state_integrity;
-use resolver::ResolutionStrategy;
-use proof::ProofGenerator;
-
-fn main() {
-    println!("--- CRYSTALLINE PROTOCOL v1.0: GENESIS RELEASE ---");
-    println!("--- ARCHITECTURE: 5-LAYER LOGIC STACK ---\n");
-
-    // 1. INITIALIZATION LAYER
-    // We choose 'StandardWeighted' strategy for this block
-    let mut engine = DeonticEngine::new(ResolutionStrategy::StandardWeighted);
-    bootstrap_crystalline_logic(&mut engine);
-    let oracle = SimulatedOracle::new("Starknet_Pragma_Feed");
-    let current_block = 845221; // Simulated block height
-
-    // 2. DATA LAYER (Oracle)
-    println!(">>> [LAYER 1] ORACLE DATA FETCH");
-    let raw_state = oracle.fetch_live_state("CRASH"); // Simulating a market crash
-    println!("    State Captured: Volatility {:.2} | Collateral {:.2}", 
-             raw_state.market_volatility, raw_state.collateral_ratio);
-
-    // 3. AXIOMATIC LAYER (Set Theory)
-    println!(">>> [LAYER 2] AXIOMATIC VALIDATION");
-    let integrity = validate_state_integrity(&raw_state);
-    if !integrity.is_valid {
-        println!("    ❌ FATAL: State Axiom Violated. Proof generation aborted.");
-        return;
+pub mod layer_0 {
+    //! Layer 0: Fundamental Axioms
+    
+    #[derive(Debug, PartialEq)]
+    pub struct StateNode {
+        pub id: String,
+        pub parent_id: Option<String>, 
     }
-    println!("    ✅ Axioms Hold. State is within valid set.");
 
-    // 4. LOGIC & RESOLUTION LAYER (Deontic Engine + Resolver)
-    println!(">>> [LAYER 3 & 4] DEONTIC ENGINE EXECUTION");
-    let target_profit = 1500.0;
-    let risk = calculate_risk_index(target_profit, raw_state.network_slippage);
-    println!("    Analyzing Action: Profit ${} | Risk Index {:.2}", target_profit, risk);
+    pub struct AxiomaticEngine;
 
-    let verdict = engine.check(target_profit, &raw_state);
+    impl AxiomaticEngine {
+        /// Axiom of Regularity (Anti-Recursion)
+        /// Verifies that a state node does not reference itself or create a simple loop.
+        /// In a full impl, this would perform a Deep Directed Acyclic Graph (DAG) check.
+        pub fn verify_regularity(current_id: &str, parent_id: &Option<String>) -> bool {
+            match parent_id {
+                Some(p_id) => current_id != p_id, // Basic check: node cannot be its own parent
+                None => true, // Root node is always regular
+            }
+        }
 
-    // 5. PROOF LAYER (Audit)
-    println!(">>> [LAYER 5] PROOF GENERATION");
-    let proof = ProofGenerator::generate(verdict, current_block);
+        /// Axiom of Choice: Deterministic Choice Function
+        /// Selects the transaction with the highest "Logical Density" (Proof weight).
+        pub fn dcf_select(tx_a: Transaction, tx_b: Transaction) -> Transaction {
+            if tx_a.logical_density >= tx_b.logical_density { tx_a } else { tx_b }
+        }
+    }
 
-    // Output the final certificate
-    ProofGenerator::print_certificate(&proof);
+    #[derive(Clone)]
+    pub struct Transaction {
+        pub id: String,
+        pub logical_density: u64,
+    }
+}
+
+pub mod layer_1 {
+    use crate::layer_0::Transaction;
+
+    pub enum StatePartition {
+        Allowed,    // Set M
+        Forbidden,  // Set N
+        Conditional, // Set R
+    }
+
+    pub struct Filter;
+
+    impl Filter {
+        pub fn classify(tx: &Transaction) -> StatePartition {
+            if tx.logical_density == 0 {
+                StatePartition::Forbidden
+            } else {
+                StatePartition::Allowed
+            }
+        }
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::layer_0::*;
+
+    #[test]
+    fn test_regularity_violation() {
+        let node_id = "node_1".to_string();
+        let invalid_parent = Some("node_1".to_string());
+
+        // This should return FALSE because it violates the Axiom of Regularity (x ∉ x)
+        let is_valid = AxiomaticEngine::verify_regularity(&node_id, &invalid_parent);
+        
+        assert!(!is_valid, "Axiom of Regularity failed: Node allowed to be its own parent!");
+        println!("Regularity Check Passed: Circular reference blocked.");
+    }
+
+    #[test]
+    fn test_choice_function() {
+        let tx1 = Transaction { id: "tx_1".to_string(), logical_density: 100 };
+        let tx2 = Transaction { id: "tx_2".to_string(), logical_density: 200 };
+
+        let winner = AxiomaticEngine::dcf_select(tx1, tx2);
+        assert_eq!(winner.id, "tx_2");
+        println!("Choice Function Passed: Deterministic winner selected.");
+    }
 }
