@@ -57,3 +57,48 @@ pub struct AxiomaticSubset<T> {
     pub elements: Vec<T>,
     pub predicate_id: String,
 }
+
+/* --- AXIOMATIC CORE TESTS --- */
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_axiom_of_regularity() {
+        let state_a = "0x71C...1b2";
+        let state_b = "0x82D...3c4";
+        
+        // Success: Standard transition (x ∉ x)
+        assert!(AxiomaticEngine::verify_regularity(state_a, state_b));
+        
+        // Failure: Self-reference / Recursive loop (x ∈ x)
+        // This is what prevents 'infinite loop' exploits and certain types of MEV.
+        assert!(!AxiomaticEngine::verify_regularity(state_a, state_a));
+    }
+
+    #[test]
+    fn test_axiom_of_choice_resolution() {
+        use crate::proof::FormalProof;
+
+        let p1 = FormalProof { witness_pi: "p1".to_string(), density: 50, is_verified: true };
+        let p2 = FormalProof { witness_pi: "p2".to_string(), density: 150, is_verified: true }; // Winner
+        let p3 = FormalProof { witness_pi: "p3".to_string(), density: 10, is_verified: true };
+
+        let conflicts = vec![p1, p2, p3];
+        
+        // The engine MUST choose the highest density according to the Axiom of Choice
+        let winner = AxiomaticEngine::resolve_choice(conflicts, |p| p.density).unwrap();
+        
+        assert_eq!(winner.density, 150);
+        assert_eq!(winner.witness_pi, "p2");
+    }
+
+    #[test]
+    fn test_logical_vacuum() {
+        // Test that an empty set of proofs returns None (Axiom of Empty Set)
+        let empty_conflicts: Vec<crate::proof::FormalProof> = vec![];
+        let result = AxiomaticEngine::resolve_choice(empty_conflicts, |p| p.density);
+        assert!(result.is_none());
+    }
+}
