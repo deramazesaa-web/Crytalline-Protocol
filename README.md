@@ -155,6 +155,17 @@ The function $f(S)$ is mapped to the **Logical Density** of the proof. In a dist
 2. **Path Selection:** The system automatically prunes all branches except the one where the logical proof has the lowest Kolmogorov complexity.
 3. **Instant Finality:** Since $f(S)$ is deterministic and verifiable by all nodes independently, the state collapses into a single line of truth immediately upon propagation.
 
+### 2.4.1 Axiom of Regularity: Foundation and Re-entrancy Protection
+
+The protocol enforces the Axiom of Regularity to ensure that the global state graph is strictly well-founded. 
+
+**Formal Constraint:**
+$$\forall A (A \neq \emptyset \implies \exists x \in A (x \cap A = \emptyset))$$
+
+**Application in Crystalline:**
+1. **Anti-Cyclic State Transitions:** Regularity forbids any state $x$ from containing itself as a member ($x \notin x$). This eliminates recursive state-dependency exploits.
+2. **Re-entrancy Prevention:** Every transaction $\tau$ must result in a set of state changes that are disjoint from the initiating state's pending transitions. Circular calls that attempt to modify a state before its parent transition is finalized are rejected as ill-founded.
+3. **Deterministic Termination:** By prohibiting infinite descending chains of membership, the protocol ensures that every proof of validity is finite and computable.
 ---
 
 ## 3. Security Properties
