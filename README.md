@@ -337,14 +337,6 @@ Install Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
 1. Clone the repo: `git clone https://github.com/your-username/Crystalline-Protocol`
 2. Run the node: `cargo run`
 
-### 2. Automated Suite (Recommended for Developers)
-We provide a unified script that builds the project, runs the entire axiomatic test suite, and launches the node:
-```bash
-chmod +x scripts/run_all.sh
-./scripts/run_all.sh
-
----
-
 ## Citation & Research
 This protocol is the result of long-term research into axiomatic governance and AI safety.
 
