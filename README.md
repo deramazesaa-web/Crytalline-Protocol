@@ -330,10 +330,18 @@ The repository contains a Rust-based implementation of the Crystalline VM (CVM) 
 - **Regularity Check:** Prevents re-entrancy attacks by detecting logical cycles in the state graph.
 - **Declarative Security:** Safety is enforced by the mathematical structure of the state, not by smart contract code.
 
-### How to run locally:
-1. Install Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
-2. Clone the repo.
-3. Run `cargo run`.
+## 🚀 How to Run Locally
+
+### 1. Manual Execution
+Install Rust: `curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh`
+1. Clone the repo: `git clone https://github.com/your-username/Crystalline-Protocol`
+2. Run the node: `cargo run`
+
+### 2. Automated Suite (Recommended for Developers)
+We provide a unified script that builds the project, runs the entire axiomatic test suite, and launches the node:
+```bash
+chmod +x scripts/run_all.sh
+./scripts/run_all.sh
 
 ## Citation & Research
 This protocol is the result of long-term research into axiomatic governance and AI safety.
