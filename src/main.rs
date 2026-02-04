@@ -54,35 +54,24 @@ fn main() {
 
     // 4. Resolve Conflict via Axiom of Choice
     let resolver = ConflictResolver::new();
-    let resolution = resolver.resolve(&rule_executive, &rule_security);
-
-    println!("\n[RESOLVER] Processing via Logic Gate...");
     
-    // Processing the resolution result
-    match resolution.winning_rule {
-        Some(rule) => {
-            println!("   -> WINNER: Rule ID #{}", rule.id);
-            println!("   -> ACTION: {}", rule.description);
-            println!("   -> REASON: {}", resolution.resolved_by);
+    // Handling the resolution with the new Error System
+    match resolver.resolve(&rule_executive, &rule_security) {
+        Ok(resolution) => {
+            println!("\n[RESOLVER] Logic Processed: {}", resolution.resolved_by);
+            println!("   -> WINNER: Rule ID #{}", resolution.winning_rule.id);
+            println!("   -> ACTION: {}", resolution.winning_rule.description);
             
-            // NEW: Persist the decision into the global state
-            // Note: axiomatic_system must be declared as 'let mut' to allow state updates
-            axiomatic_system.commit_rule(rule); 
+            // Commit the decision to the permanent axiomatic state
+            axiomatic_system.commit_rule(resolution.winning_rule); 
         },
-        None => {
-            println!("   -> No conflict or tie identified.");
+        Err(e) => {
+            // This catches violations like PriorityOverflow or AxiomaticParadox
+            println!("\n[CRITICAL ERROR] Axiomatic violation detected: {:?}", e);
+            println!("[SYSTEM] Transaction rejected to maintain logical consistency.");
         }
     }
-    
-    // Final state verification
+
+    // 5. Verify Final System Status
+    println!("\n[FINALIZING EPOCH]");
     axiomatic_system.get_status();
-
-    if let ConflictType::LogicalContradiction = resolution.conflict_type {
-        println!("[ALERT] Logical Contradiction handled safely without system crash.");
-    }
-
-    // 5. Finalize
-    println!("\n--------------------------------------------------");
-    println!("   Block Validated. Waiting for next epoch...     ");
-    println!("--------------------------------------------------");
-}
