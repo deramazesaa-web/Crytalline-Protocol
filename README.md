@@ -136,26 +136,6 @@ Most protocols rely on **Probabilistic Finality** (trusting that the majority is
 
 The core is written in **Rust** to ensure memory safety and zero-cost abstractions for the axiomatic engine.
 
-### Run Axiomatic Verification
-
-To verify the logical integrity of the protocol, run the built-in formal tests:
-
-```bash
-# Clone the repository
-git clone https://github.com/deramazesaa-web/Crystalline-Protocol.git
-
-# Navigate to directory
-cd Crystalline-Protocol
-
-# Execute Axiomatic Tests
-cargo test
-## 6. Glossary of Terms
-
-* **Super-Subject:** A digital entity with a unified logical identity and axiomatic boundaries.
-* **Logical Entropy:** The accumulation of contradictory rules in a governance system.
-* **Governance Slime:** The terminal state of a system where complexity makes decision-making impossible.
-* **Logical Premium:** The increased value of assets protected by formal mathematical certainty.
-
 # Crystalline Protocol: Axiomatic Layer 0 Specification
 
 ## 1. Abstract
@@ -282,7 +262,7 @@ Layer 1 implements a ternary decision manifold for every proposed transition $\t
    A transition in $\mathbb{R}$ remains in a state of "logical potential" until $\pi$ is provided, at which point it is reassigned to $\mathbb{M}$ via the Axiom of Choice.
 ---
 
-# Crystalline Protocol: Axiomatic Layer 2 Specification
+## Crystalline Protocol: Axiomatic Layer 2 Specification
 
 ## 1. Abstract: The Projection Layer
 Layer 2 (L2) is the interface between the formal axiomatic core and external observers. Its primary function is to generate compressed projections of the state using the Power Set Axiom, enabling high-speed data retrieval and cross-chain interoperability.
