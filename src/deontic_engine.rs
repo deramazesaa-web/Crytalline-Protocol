@@ -1,87 +1,65 @@
-use crate::resolver::{ConflictResolver, ResolutionStrategy, ResolutionResult};
+/*
+ * CRYSTALLINE PROTOCOL: DEONTIC ENGINE (LAYER 1)
+ * ---------------------------------------------
+ * This engine maps Deontic Logic (Obligation, Permission, Prohibition)
+ * to Axiomatic Partitions (M, N, R) defined in Layer 0.
+ */
 
-#[derive(Debug, Clone, PartialEq, Eq)]
-pub enum DeonticModality {
-    Obligation,   // Mandatory actions (O)
-    Prohibition,  // Forbidden actions (P)
-    Permission,   // Allowed actions (A)
-}
+use crate::axiomatics::{AxiomaticEngine, LogicPartition};
 
-pub struct Norm {
-    pub id: &'static str,
-    pub modality: DeonticModality,
-    pub priority: u32, 
-}
-
-pub struct WorldState {
-    pub collateral_ratio: f64,
-    pub network_slippage: f64,
-    pub market_volatility: f64,
-}
-
-pub struct LogicVerdict {
-    pub is_allowed: bool,
-    pub confidence_score: u32,
-    pub logs: Vec<String>,
+/// Deontic statuses for a given state transition.
+pub enum DeonticStatus {
+    Permitted,   // Standard execution
+    Obligatory,  // Must happen (e.g., protocol maintenance)
+    Prohibited,  // Axiomatic violation
 }
 
 pub struct DeonticEngine {
-    norms: Vec<Norm>,
-    resolver: ConflictResolver,
+    pub name: String,
 }
 
 impl DeonticEngine {
-    /// Initializes a new engine with a specific arbitration strategy
-    pub fn new(strategy: ResolutionStrategy) -> Self {
-        Self { 
-            norms: Vec::new(),
-            resolver: ConflictResolver::new(strategy),
+    pub fn new() -> Self {
+        Self {
+            name: "Crystalline Deontic Engine".to_string(),
         }
     }
 
-    /// Adds a formal norm to the engine's knowledge base
-    pub fn add_norm(&mut self, id: &'static str, modality: DeonticModality, priority: u32) {
-        self.norms.push(Norm { id, modality, priority });
+    /// Evaluates a transition and maps it to an Axiomatic Partition (Layer 1 Specification).
+    /// This is where the "Three Branches" of reality are defined.
+    pub fn evaluate_transition(&self, current_val: &str, next_val: &str) -> LogicPartition {
+        // 1. First check: Axiom of Regularity (Fundamental Security)
+        if !AxiomaticEngine::verify_regularity(current_val, next_val) {
+            return LogicPartition::Forbidden; // Violates x ∉ x
+        }
+
+        // 2. Deontic Logic Filtering
+        // In a full implementation, this checks ethical_rules.rs
+        let status = self.get_deontic_status(next_val);
+
+        match status {
+            DeonticStatus::Permitted => LogicPartition::Allowed,   // Branch M
+            DeonticStatus::Prohibited => LogicPartition::Forbidden, // Branch N
+            DeonticStatus::Obligatory => LogicPartition::Allowed,  // Branch M (High priority)
+        }
     }
 
-    /// Evaluates a proposed transaction against the current world state
-    pub fn check(&self, profit: f64, state: &WorldState) -> LogicVerdict {
-        let mut logs = Vec::new();
-        let mut forbidden_weight = 0;
-        let mut mandatory_weight = 0;
-
-        logs.push("INITIALIZING_DEONTIC_EVALUATION".to_string());
-
-        // 1. Scan for Prohibitions (e.g., Anti-Greed/Ethical filters)
-        if state.network_slippage > 0.01 && profit > 0.0 {
-            if let Some(n) = self.norms.iter().find(|n| n.id == "ETHICAL_MEV_GUARD") {
-                forbidden_weight += n.priority;
-                logs.push(format!("CONFLICT_DETECTED: {} (Weight: {})", n.id, n.priority));
-            }
+    /// Internal logic to determine if an action is allowed or forbidden.
+    fn get_deontic_status(&self, target: &str) -> DeonticStatus {
+        if target == "malicious_state" {
+            DeonticStatus::Prohibited
+        } else if target == "required_update" {
+            DeonticStatus::Obligatory
+        } else {
+            DeonticStatus::Permitted
         }
+    }
+}
 
-        // 2. Scan for Obligations (e.g., Protocol Survival/Solvency)
-        if state.collateral_ratio < 1.3 {
-            if let Some(n) = self.norms.iter().find(|n| n.id == "SURVIVAL_AXIOM") {
-                mandatory_weight += n.priority;
-                logs.push(format!("URGENCY_DETECTED: {} (Weight: {})", n.id, n.priority));
-            }
-        }
-
-        // 3. Delegation to the Conflict Resolver (Arbitration Phase)
-        let resolution = self.resolver.resolve(mandatory_weight, forbidden_weight);
-        
-        let (is_allowed, reason) = match resolution {
-            ResolutionResult::Allowed(msg) => (true, msg),
-            ResolutionResult::Denied(msg) => (false, msg),
-        };
-
-        logs.push(format!("ARBITRATION_RESULT: {}", reason));
-
-        LogicVerdict {
-            is_allowed,
-            confidence_score: if is_allowed { mandatory_weight } else { forbidden_weight },
-            logs,
-        }
+/// Helper trait to resolve conflicts using the Axiom of Choice.
+pub trait ConflictResolver {
+    fn resolve_ethical_conflict<T>(&self, options: Vec<T>, weight_fn: fn(&T) -> u64) -> Option<T> {
+        // Directly utilizing Layer 0 Axiom of Choice
+        AxiomaticEngine::resolve_choice(options, weight_fn)
     }
 }
