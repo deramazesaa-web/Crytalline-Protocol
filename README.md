@@ -33,6 +33,8 @@ Crystalline is a Distributed Deductive Engine based on **Zermelo-Fraenkel (ZF) s
 * **Layer 1 (The Logic Filter):** Ternary state partitioning (Allowed/Forbidden/Conditional). Smart contracts as static predicates.
 * **Layer 2 (The Projection):** Power Set projections for light clients and cross-chain interoperability.
 
+---
+
 ### Automated Execution
 You can run the full validation and simulation suite with a single command:
 ```bash
