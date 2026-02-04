@@ -35,14 +35,6 @@ Crystalline is a Distributed Deductive Engine based on **Zermelo-Fraenkel (ZF) s
 
 ---
 
-### Automated Execution
-You can run the full validation and simulation suite with a single command:
-```bash
-chmod +x scripts/run_all.sh
-./scripts/run_all.sh
-
----
-
 ## 1. The Core Thesis: Beyond "Governance Slime"
 
 Traditional decentralized systems (DAOs) and AI-driven entities suffer from **Logical Entropy**. As rules, upgrades, and proposals accumulate, the system inevitably enters a state of **"Governance Slime"**—a phase where internal contradictions make the state-space undecidable and vulnerable to exploitation.
