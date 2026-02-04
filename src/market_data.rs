@@ -1,50 +1,33 @@
-/*
- * CRYSTALLINE PROTOCOL: MARKET DATA ORACLE (LAYER 2)
- * -------------------------------------------------
- * Implementation of the Projection Layer using the Axiom of Infinity.
- * Transforms external entropy into formal axiomatic witnesses.
- */
+// src/market_data.rs
 
-pub struct MarketData {
-    pub symbol: String,
-    pub price: u64,
-    pub volume: u64,
-}
+use std::time::{SystemTime, UNIX_EPOCH};
 
 pub struct MarketOracle {
-    pub provider_id: String,
+    pub last_price: f64,
 }
 
 impl MarketOracle {
-    pub fn new(provider: &str) -> Self {
-        Self {
-            provider_id: provider.to_string(),
-        }
+    pub fn new() -> Self {
+        Self { last_price: 2500.0 } // Initial base price (e.g., ETH)
     }
 
-    /// Axiom of Infinity: Processes potentially infinite data streams.
-    /// In Crystalline, this projects external reality into Layer 1 predicates.
-    pub fn fetch_live_projection(&self, symbol: &str) -> MarketData {
-        // In a production environment, this would call a real API/IBC.
-        // For the PoC, we generate a stable projection.
-        MarketData {
-            symbol: symbol.to_string(),
-            price: 50000, // Normalized axiomatic value
-            volume: 1000,
-        }
+    /// Simulates fetching a live price with random volatility
+    pub fn fetch_price(&mut self, ticker: &str) -> f64 {
+        // Simple pseudo-random generator based on system time
+        let start = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_nanos();
+        let volatility = (start % 100) as f64 / 1000.0; // 0.0 to 0.1 range
+        
+        let direction = if start % 2 == 0 { 1.0 } else { -1.0 };
+        self.last_price += self.last_price * volatility * direction;
+        
+        println!("[ORACLE] Fetched {} price: ${:.2}", ticker, self.last_price);
+        self.last_price
     }
 
-    /// Transforms raw data into a Witness (pi) for the Conditional branch (Set R).
-    pub fn generate_market_witness(&self, data: &MarketData) -> String {
-        format!(
-            "Witness_π(Symbol: {}, Price: {}, Provider: {})",
-            data.symbol, data.price, self.provider_id
-        )
-    }
-
-    /// Verifies if the market data satisfies a specific ethical/economic density.
-    pub fn verify_data_integrity(&self, data: &MarketData) -> bool {
-        // Rule: Price must be non-zero (Basic existence axiom)
-        data.price > 0 && !data.symbol.is_empty()
+    /// Returns market condition based on volatility
+    pub fn is_volatile(&self) -> bool {
+        // If price is ends with an even digit, simulate high volatility for testing
+        let seed = SystemTime::now().duration_since(UNIX_EPOCH).unwrap().as_secs();
+        seed % 2 == 0
     }
 }
