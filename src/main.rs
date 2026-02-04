@@ -60,10 +60,23 @@ fn main() {
         Ok(resolution) => {
             println!("\n[RESOLVER] Logic Processed: {}", resolution.resolved_by);
             println!("   -> WINNER: Rule ID #{}", resolution.winning_rule.id);
-            println!("   -> ACTION: {}", resolution.winning_rule.description);
             
-            // Commit the decision to the permanent axiomatic state
-            axiomatic_system.commit_rule(resolution.winning_rule); 
+            // 4a. Commit to state
+            axiomatic_system.commit_rule(resolution.winning_rule.clone()); 
+
+            // 4b. Generate Proof (Step 1.2 & 2)
+            let proof = crate::proof::ProofGenerator::generate_proof(
+                &resolution.winning_rule, 
+                &axiomatic_system
+            );
+            println!("[SYSTEM] Proof generated: {}", proof.witness_hash);
+
+            // 4c. Immediate Verification check
+            if crate::proof::ProofGenerator::verify_proof(&proof, &axiomatic_system) {
+                println!("[SUCCESS] Decision verified by axiomatic verifier.");
+            } else {
+                println!("[FAILURE] Proof verification failed! State mismatch.");
+            }
         },
         Err(e) => {
             // This catches violations like PriorityOverflow or AxiomaticParadox
