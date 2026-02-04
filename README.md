@@ -178,6 +178,18 @@ $$\forall x \forall y (\forall z (z \in x \iff z \in y) \implies x = y)$$
 1. **Immutable Identity:** A transaction's identity is derived from its logical elements ($z$), not its metadata. This inherently eliminates Transaction Malleability.
 2. **Global Deduplication:** The state engine ensures that no two distinct sets with identical elements can exist simultaneously. This forces a canonical representation of the global state at all times.
 3. **Verification of Equivalence:** Logic-based verification allows the protocol to confirm that a proposed state change is unique. If a transition is found to be extensionally equal to an existing state, it is treated as a redundant operation, preventing state bloat and "replay" attempts at the logic level.
+
+### 2.4.3 Axiom of Specification: Logical Filtering and Layer Separation
+
+The protocol employs the Axiom of Specification to define valid sub-states and isolate Layer 1 application logic from the Layer 0 core.
+
+**Formal Constraint:**
+$$\forall A \exists B \forall x (x \in B \iff (x \in A \wedge P(x)))$$
+
+**Application in Crystalline:**
+1. **Layer 1 Sandboxing:** Layer 1 applications are defined as predicates $P(x)$ that select valid transitions from the universal set of possibilities $A$. This ensures that invalid data is rejected at the logic level before any state transition is attempted.
+2. **Stateless Validation:** Verification becomes a task of checking if an element $\tau$ belongs to a defined subset $B$. This allows for high-speed filtering without the overhead of a full Turing-complete execution environment.
+3. **Implicit Sharding:** By defining distinct predicates for different sub-networks, Crystalline achieves native logical sharding. Transactions are partitioned into disjoint sets, preventing cross-contract interference while maintaining a unified axiomatic foundation.
 ---
 
 ## 3. Security Properties
