@@ -204,6 +204,33 @@ $$\forall X (\emptyset \notin X \implies \exists f \in \prod_{A \in X} A)$$
 3. **Elimination of Forks:** Since the Choice Function is a fundamental property of Layer 0, the state space cannot branch. Any attempt to create a fork results in a set that violates the choice-derived consistency, causing the divergent branch to collapse instantly.
 ---
 
+# Crystalline Protocol: Axiomatic Layer 1 Specification
+
+## 1. Abstract
+Layer 1 in Crystalline is the Application Domain. It functions by defining specific predicates ($P_s$) that act as logical filters over the universal Layer 0 set. L1 does not execute instructions; it validates membership within defined sub-sets of reality.
+
+## 2. Technical Mechanisms
+
+### 2.1 Logical Sandboxing (Axiom of Specification)
+Every L1 instance (Smart Contract) is a restricted subset of the global state $\Sigma$.
+$$\text{State}_{L1} = \{ x \in \Sigma \mid P_{L1}(x) \}$$
+This ensures that L1 applications are mathematically isolated. An exploit in one dApp cannot propagate to another because their predicates $P_{L1}$ and $P_{L2}$ are disjoint.
+
+### 2.2 Atomic Transitions (Axiom of Pairing & Union)
+Complex operations (e.g., decentralized exchanges) are governed by the Axiom of Pairing.
+$$\forall a, b \exists C (C = \{a, b\})$$
+In L1, this allows the creation of atomic multi-state updates. A trade between two parties is defined as a single set $C$. The transition $\Sigma \to \Sigma \cup C$ is valid only if both elements $a$ and $b$ satisfy their respective predicates simultaneously.
+
+### 2.3 Constraint-Based Logic (CBL)
+Layer 1 replaces imperative programming with Constraint-Based Logic. 
+* **Immutable Rules:** Instead of "If/Then" execution, L1 defines "Must/Be" invariants.
+* **Verification over Execution:** The CVM (Crystalline Virtual Machine) verifies that the proposed state transition $\Delta$ is an element of the valid subset defined by the contract's predicate.
+
+## 3. L1 Safety Properties
+1. **Double-Spend Immunity:** Inherited from L0 Choice Function.
+2. **Logic-Level Security:** Re-entrancy is impossible due to the Axiom of Regularity enforcing a strict hierarchy of calls.
+3. **No Garbage State:** A transaction that does not satisfy $P_{L1}$ is ontologically void and occupies no space in the state graph.
+
 ## 3. Security Properties
 
 * **Exploit Immunity:** Re-entrancy and ill-founded loops are forbidden by the **Axiom of Regularity**: $A \cap x = \emptyset$.
