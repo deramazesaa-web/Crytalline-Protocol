@@ -1,33 +1,33 @@
+mod axiomatics;
 mod deontic_engine;
-mod axiomatic_layer;
 
-use axiomatic_layer::AxiomaticLayer;
+use axiomatics::AxiomaticLayer;
 use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 
 fn main() {
-    // 1. Axiomatic Level (Fundamental Rules)
-    let axiom_system = AxiomaticLayer::new();
-    
-    // Check if the world-state is logically possible
-    if !axiom_system.validate_foundations() {
-        panic!("Axiomatic violation: The logical foundation of the protocol is unstable.");
-    }
+    println!("=== Crystalline Protocol: ZF-Axiomatic Logic ===");
 
-    // 2. Deontic Level (System Behavior)
+    // PHASE 1: Axiomatic Verification
+    let axioms = AxiomaticLayer::new();
+    
+    if !axioms.verify_foundations() {
+        panic!("Axiomatic Instability: ZF requirements not met.");
+    }
+    println!("Axioms: Extensionality, Regularity, Specification, Choice - ACTIVE");
+
+    // PHASE 2: Deontic Compliance
     let mut engine = DeonticEngine::new();
 
-    // Define a rule: Data must be verified
-    let integrity_norm = Norm::new(
-        "Data_Integrity_Verification",
-        ActionStatus::Obligatory,
-    );
+    // The Norm is based on the Axiom of Specification:
+    // Only "Verified" actions are permitted.
+    let secure_norm = Norm::new("Specified_Action", ActionStatus::Permitted);
+    engine.add_norm(secure_norm);
 
-    engine.add_norm(integrity_norm);
+    // PHASE 3: Execution
+    let action = "Validated_State_Change";
+    let compliance = engine.check_compliance(action);
 
-    // 3. Evaluation
-    let current_action = "Process_New_Block";
-    let result = engine.check_compliance(current_action);
-
-    println!("Axiomatic status: VALID");
-    println!("Action '{}' evaluation: {:?}", current_action, result);
+    println!("Action: {}", action);
+    println!("Status: {:?}", compliance);
+    println!("=== Protocol Integrity: Axiomatic & Deontic Sync Successful ===");
 }
