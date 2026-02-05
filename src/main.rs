@@ -1,36 +1,39 @@
 mod deontic_engine;
 mod axiomatic_layer;
 
-use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 use axiomatic_layer::AxiomaticLayer;
+use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 
 fn main() {
-    println!("--- Crystalline Protocol: Logic is Physics Mode ---");
+    println!("=== Crystalline Protocol: Hierarchy of Logic ===");
 
-    // 1. Initialize the Axiomatic Foundation
-    let axiom_foundation = AxiomaticLayer::new();
-    if !axiom_foundation.verify_integrity() {
-        panic!("Protocol Collapse: Axiomatic integrity violation.");
+    // PHASE 1: Axiomatic Layer (Fundamental Physics)
+    // The system cannot exist if axioms are violated.
+    let axioms = AxiomaticLayer::new();
+    
+    if !axioms.is_consistent() {
+        panic!("CRITICAL FAILURE: Axiomatic inconsistency detected. System collapse.");
     }
+    println!("Status: Axiomatic Layer Verified (Logic is Physics).");
 
-    // 2. Initialize the Deontic Engine
-    let mut engine = DeonticEngine::new();
+    // PHASE 2: Deontic Layer (Legal/Normative Logic)
+    // Once physics is stable, we apply normative rules.
+    let mut deontic_engine = DeonticEngine::new();
 
-    // 3. Define a normative constraint (Example: Transaction validation)
-    let transaction_norm = Norm::new(
-        "SecureTransfer",
+    // Example: Defining a security norm based on the axiomatic state
+    let security_norm = Norm::new(
+        "Encrypted_Transmission",
         ActionStatus::Obligatory,
     );
-    
-    engine.add_norm(transaction_norm);
 
-    // 4. Process a logical state through the engine
-    let test_action = "Inbound_Data_Packet";
-    let compliance = engine.check_compliance(test_action);
+    deontic_engine.add_norm(security_norm);
 
-    println!("Action: {}", test_action);
-    println!("Compliance Status: {:?}", compliance);
+    // PHASE 3: Execution and Compliance
+    let action = "Inbound_Packet_Stream";
+    let compliance_result = deontic_engine.check_compliance(action);
+
+    println!("Processing Action: '{}'", action);
+    println!("Deontic Compliance: {:?}", compliance_result);
     
-    // 5. Finalize the state
-    println!("--- Crystalline Execution Successful ---");
+    println!("=== Protocol Lifecycle: Execution Completed ===");
 }
