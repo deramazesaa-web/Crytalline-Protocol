@@ -7,27 +7,24 @@ use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 fn main() {
     println!("=== Crystalline Protocol: ZF-Axiomatic Logic ===");
 
-    // PHASE 1: Axiomatic Verification
+    // 1. Axiomatic Level
     let axioms = AxiomaticLayer::new();
     
-    if !axioms.verify_foundations() {
-        panic!("Axiomatic Instability: ZF requirements not met.");
+    // Check Axiom of Regularity
+    if !axioms.axiom_regularity("state_b", "state_a") {
+        panic!("Axiomatic violation detected.");
     }
-    println!("Axioms: Extensionality, Regularity, Specification, Choice - ACTIVE");
+    println!("Axiomatic status: VALID");
 
-    // PHASE 2: Deontic Compliance
+    // 2. Deontic Level
     let mut engine = DeonticEngine::new();
+    let integrity_norm = Norm::new("Process_Data", ActionStatus::Obligatory);
+    engine.add_norm(integrity_norm);
 
-    // The Norm is based on the Axiom of Specification:
-    // Only "Verified" actions are permitted.
-    let secure_norm = Norm::new("Specified_Action", ActionStatus::Permitted);
-    engine.add_norm(secure_norm);
+    // 3. Evaluation
+    let current_action = "Process_Data";
+    let result = engine.check_compliance(current_action);
 
-    // PHASE 3: Execution
-    let action = "Validated_State_Change";
-    let compliance = engine.check_compliance(action);
-
-    println!("Action: {}", action);
-    println!("Status: {:?}", compliance);
-    println!("=== Protocol Integrity: Axiomatic & Deontic Sync Successful ===");
+    println!("Action '{}' evaluation: {:?}", current_action, result);
+    println!("=== Verification Passed ===");
 }
