@@ -1,14 +1,13 @@
 [package]
-name = "crystalline-protocol"
+name = "Crystalline-Protocol"
 version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-serde = { version = "1.0", features = ["derive"] }
-serde_json = "1.0"
 k256 = "0.13"
-bech32 = "0.9"
 rand_core = { version = "0.6", features = ["getrandom"] }
 hex = "0.4"
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
 
 
