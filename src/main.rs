@@ -1,21 +1,29 @@
 mod identity;
+mod crypto;
 
 use identity::{CrystallineIdentity, ProtocolMode};
+use crypto::CrystallineCrypto;
 
 fn main() {
-    // Stage 1: Protocol Initialization
     println!("=== Crystalline Protocol v0.1.0 ===");
-    
-    // Stage 2: Identity Generation
-    // We choose Secp256k1 for initial ecosystem compatibility
+
+    // 1. Identity Layer
     let identity = CrystallineIdentity::generate_new(ProtocolMode::Secp256k1);
+    println!("Node Identity: Initialized");
+
+    // 2. Data to protect
+    let secret_message = b"Crystalline Protocol: Universal Security Active";
+    println!("Original Message: {}", String::from_utf8_lossy(secret_message));
+
+    // 3. Encryption Layer
+    // We use the identity's secret key to encrypt the message
+    let (encrypted_data, nonce) = CrystallineCrypto::encrypt(secret_message, &identity.secret);
+    println!("Encryption: Success (Hex: {})", hex::encode(&encrypted_data));
+
+    // 4. Verification / Decryption Layer
+    let decrypted_data = CrystallineCrypto::decrypt(&encrypted_data, &identity.secret, &nonce);
     
-    // Stage 3: Output Metadata
-    println!("Status: Active");
-    println!("Security Mode: SECP256K1");
-    println!("Node Identity (Secret): {}", identity.get_private_key_hex());
+    println!("Decrypted Result: {}", String::from_utf8_lossy(&decrypted_data));
+    println!("Protocol Integrity: Verified");
     println!("===================================");
-    
-    // Future Stage: Here we will add data encryption and transport
-    println!("Ready for secure data transmission.");
 }
