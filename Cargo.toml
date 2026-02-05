@@ -4,10 +4,7 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-k256 = "0.13"
-rand_core = { version = "0.6", features = ["getrandom"] }
-hex = "0.4"
 serde = { version = "1.0", features = ["derive"] }
 serde_json = "1.0"
-aes-gcm = "0.10"
-
+hex = "0.4"
+rand_core = "0.6"
