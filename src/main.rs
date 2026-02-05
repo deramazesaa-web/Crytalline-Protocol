@@ -1,87 +1,47 @@
-// src/main.rs
+use std::fs::File;
+use std::io::Write;
+use serde::{Serialize, Deserialize};
+use k256::elliptic_curve::sec1::ToEncodedPoint;
+use k256::Secp256k1;
+use bech32::{self, ToBase32, Variant};
+use rand_core::{OsRng, RngCore};
 
-mod axiomatics;
-mod deontic_engine;
-mod ethical_rules;
-mod proof;
-mod resolver;
-mod market_data;
-mod errors;
-
-use crate::axiomatics::AxiomaticState;
-use crate::deontic_engine::{DeonticModality, Rule};
-use crate::resolver::ConflictResolver;
-use crate::market_data::MarketOracle;
-use crate::proof::ProofGenerator;
+#[derive(Serialize, Deserialize, Debug)]
+struct Wallet {
+    mnemonic: String,
+    address: String,
+    pubkey: String,
+}
 
 fn main() {
-    println!("--------------------------------------------------");
-    println!("   CRYSTALLINE PROTOCOL v0.1.0 (Genesis Node)     ");
-    println!("   Status: Operational | Mode: Multi-Epoch        ");
-    println!("--------------------------------------------------");
+    // 1. Generate 256-bit entropy
+    let mut entropy = [0u8; 32];
+    OsRng.fill_bytes(&mut entropy);
 
-    // Initialize core components
-    let mut axiomatic_system = AxiomaticState::new();
-    let mut oracle = MarketOracle::new();
-    let resolver = ConflictResolver::new();
+    // 2. Mock mnemonic (replace with real BIP-39 logic if needed)
+    let mnemonic_phrase = "example word phrase generated for demonstration purpose only".to_string();
 
-    // Simulate 3 business cycles (Epochs) to see the system in motion
-    for epoch in 1..=3 {
-        println!("\n>>> STARTING EPOCH #{} <<<", epoch);
+    // 3. Generate Keys
+    let secret_key = k256::SecretKey::from_be32(&entropy).expect("Invalid length");
+    let public_key = secret_key.public_key();
+    let pubkey_hex = hex::encode(public_key.to_encoded_point(true).as_bytes());
 
-        // 1. Fetch live market data from the Oracle
-        let price = oracle.fetch_price("ETH");
-        let market_is_risky = oracle.is_volatile();
+    // 4. Generate Bech32 Address (CosmWasm style)
+    let address_bytes = &entropy[0..20]; // Simple derivation for example
+    let address = bech32::encode("wasm", address_bytes.to_base32(), Variant::Bech32)
+        .expect("Encoding failed");
 
-        if market_is_risky {
-            println!("[WARNING] High volatility detected in Epoch #{}", epoch);
-        }
+    // 5. Create Wallet Object
+    let wallet = Wallet {
+        mnemonic: mnemonic_phrase,
+        address: address,
+        pubkey: pubkey_hex,
+    };
 
-        // 2. Define competing rules based on current market sentiment
-        let rule_executive = Rule {
-            id: 100 + epoch,
-            description: format!("Execute Trade at ${:.2}", price),
-            modality: DeonticModality::Obligatory,
-            priority: if market_is_risky { 40 } else { 90 }, // Trade priority drops during volatility
-        };
+    // 6. Save to JSON
+    let json_data = serde_json::to_string_pretty(&wallet).expect("JSON serialization failed");
+    let mut file = File::create("wallet.json").expect("File creation failed");
+    file.write_all(json_data.as_bytes()).expect("Write failed");
 
-        let rule_security = Rule {
-            id: 200 + epoch,
-            description: "Safety Buffer Activation".to_string(),
-            modality: DeonticModality::Prohibited,
-            priority: 75, // Security has a constant high threshold
-        };
-
-        // 3. Resolve conflict using the Axiom of Choice
-        match resolver.resolve(&rule_executive, &rule_security) {
-            Ok(resolution) => {
-                println!("[RESOLVER] Decision: {} (via {})", 
-                    resolution.winning_rule.description, resolution.resolved_by);
-                
-                // 4. Commit the winning rule to the global axiomatic state
-                axiomatic_system.commit_rule(resolution.winning_rule.clone());
-
-                // 5. Generate and verify a cryptographic proof
-                let proof = ProofGenerator::generate_proof(
-                    &resolution.winning_rule, 
-                    &axiomatic_system
-                );
-                
-                if ProofGenerator::verify_proof(&proof, &axiomatic_system) {
-                    println!("[SUCCESS] Proof verified: {}", proof.witness_hash);
-                } else {
-                    println!("[CRITICAL] Proof verification failed for witness {}", proof.witness_hash);
-                }
-            },
-            Err(e) => {
-                println!("[ERROR] Logic failure in Epoch #{}: {:?}", epoch, e);
-            }
-        }
-    }
-
-    // Final summary of the protocol's state
-    println!("\n--------------------------------------------------");
-    println!("   FINAL SYSTEM STATE SUMMARY                    ");
-    axiomatic_system.get_status();
-    println!("--------------------------------------------------");
+    println!("Success: Wallet saved to wallet.json");
 }
