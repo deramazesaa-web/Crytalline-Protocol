@@ -5,35 +5,29 @@ use axiomatic_layer::AxiomaticLayer;
 use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 
 fn main() {
-    println!("=== Crystalline Protocol: Hierarchy of Logic ===");
-
-    // PHASE 1: Axiomatic Layer (Fundamental Physics)
-    // The system cannot exist if axioms are violated.
-    let axioms = AxiomaticLayer::new();
+    // 1. Axiomatic Level (Fundamental Rules)
+    let axiom_system = AxiomaticLayer::new();
     
-    if !axioms.is_consistent() {
-        panic!("CRITICAL FAILURE: Axiomatic inconsistency detected. System collapse.");
+    // Check if the world-state is logically possible
+    if !axiom_system.validate_foundations() {
+        panic!("Axiomatic violation: The logical foundation of the protocol is unstable.");
     }
-    println!("Status: Axiomatic Layer Verified (Logic is Physics).");
 
-    // PHASE 2: Deontic Layer (Legal/Normative Logic)
-    // Once physics is stable, we apply normative rules.
-    let mut deontic_engine = DeonticEngine::new();
+    // 2. Deontic Level (System Behavior)
+    let mut engine = DeonticEngine::new();
 
-    // Example: Defining a security norm based on the axiomatic state
-    let security_norm = Norm::new(
-        "Encrypted_Transmission",
+    // Define a rule: Data must be verified
+    let integrity_norm = Norm::new(
+        "Data_Integrity_Verification",
         ActionStatus::Obligatory,
     );
 
-    deontic_engine.add_norm(security_norm);
+    engine.add_norm(integrity_norm);
 
-    // PHASE 3: Execution and Compliance
-    let action = "Inbound_Packet_Stream";
-    let compliance_result = deontic_engine.check_compliance(action);
+    // 3. Evaluation
+    let current_action = "Process_New_Block";
+    let result = engine.check_compliance(current_action);
 
-    println!("Processing Action: '{}'", action);
-    println!("Deontic Compliance: {:?}", compliance_result);
-    
-    println!("=== Protocol Lifecycle: Execution Completed ===");
+    println!("Axiomatic status: VALID");
+    println!("Action '{}' evaluation: {:?}", current_action, result);
 }
