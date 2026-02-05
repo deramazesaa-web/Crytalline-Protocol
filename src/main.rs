@@ -1,29 +1,36 @@
-mod identity;
-mod crypto;
+mod deontic_engine;
+mod axiomatic_layer;
 
-use identity::{CrystallineIdentity, ProtocolMode};
-use crypto::CrystallineCrypto;
+use deontic_engine::{DeonticEngine, Norm, ActionStatus};
+use axiomatic_layer::AxiomaticLayer;
 
 fn main() {
-    println!("=== Crystalline Protocol v0.1.0 ===");
+    println!("--- Crystalline Protocol: Logic is Physics Mode ---");
 
-    // 1. Identity Layer
-    let identity = CrystallineIdentity::generate_new(ProtocolMode::Secp256k1);
-    println!("Node Identity: Initialized");
+    // 1. Initialize the Axiomatic Foundation
+    let axiom_foundation = AxiomaticLayer::new();
+    if !axiom_foundation.verify_integrity() {
+        panic!("Protocol Collapse: Axiomatic integrity violation.");
+    }
 
-    // 2. Data to protect
-    let secret_message = b"Crystalline Protocol: Universal Security Active";
-    println!("Original Message: {}", String::from_utf8_lossy(secret_message));
+    // 2. Initialize the Deontic Engine
+    let mut engine = DeonticEngine::new();
 
-    // 3. Encryption Layer
-    // We use the identity's secret key to encrypt the message
-    let (encrypted_data, nonce) = CrystallineCrypto::encrypt(secret_message, &identity.secret);
-    println!("Encryption: Success (Hex: {})", hex::encode(&encrypted_data));
-
-    // 4. Verification / Decryption Layer
-    let decrypted_data = CrystallineCrypto::decrypt(&encrypted_data, &identity.secret, &nonce);
+    // 3. Define a normative constraint (Example: Transaction validation)
+    let transaction_norm = Norm::new(
+        "SecureTransfer",
+        ActionStatus::Obligatory,
+    );
     
-    println!("Decrypted Result: {}", String::from_utf8_lossy(&decrypted_data));
-    println!("Protocol Integrity: Verified");
-    println!("===================================");
+    engine.add_norm(transaction_norm);
+
+    // 4. Process a logical state through the engine
+    let test_action = "Inbound_Data_Packet";
+    let compliance = engine.check_compliance(test_action);
+
+    println!("Action: {}", test_action);
+    println!("Compliance Status: {:?}", compliance);
+    
+    // 5. Finalize the state
+    println!("--- Crystalline Execution Successful ---");
 }
