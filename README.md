@@ -63,6 +63,28 @@ Crystalline Protocol shifts the security boundary from the **application layer**
 * **Mathematical Isolation:** The "Blind Carrier" serves only as a transport mechanism, lacking the logical tools to reverse the state transition enforced by the Crystalline Kernel.
 * **Deterministic Privacy:** Security is no longer a feature of the app; it is a constraint of the environment.
 
+## 🌍 Universal Portability & Integration
+
+The protocol is designed as a platform-agnostic core. By utilizing Rust's memory safety and mathematical invariance, the logic can be ported to any computational environment—from mobile devices to secure hardware elements.
+
+### Supported Targets
+The core is currently verified for the following architectures:
+* **Mobile:** Android (aarch64, armv7, x86_64) via JNI/FFI.
+* **Desktop/Server:** Generic Linux (x86_64) as a shared object (`.so`).
+* **Embedded (Roadmap):** Bare-metal ARM Cortex-M support for hardware-level sovereignty.
+
+### Integration Architecture
+Crystalline operates on a "Core-Satellite" model:
+1.  **The Core (Rust):** Handles all Axiomatic verification and Deontic compliance.
+2.  **The FFI Bridge:** A C-compatible interface (`src/ffi.rs` and `include/crystalline.h`) that allows any language to interact with the Core.
+3.  **The Consumer:** Your application (Swift, Kotlin, C++, or Python) which handles the UI and OS-level interactions.
+
+---
+
+## 🛠 Building for Your Platform
+
+To generate the binaries for all supported platforms, use the universal build script provided in the repository.
+
 ## Formal Mathematical Framework
 
 ### 1.1 Set-Theoretic Foundation (ZF)
