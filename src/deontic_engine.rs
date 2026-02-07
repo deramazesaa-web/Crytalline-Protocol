@@ -1,18 +1,23 @@
-// src/deontic_engine.rs
-use crate::axiomatics::{AxiomaticEngine, LogicPartition};
+use crate::axiomatics::AxiomaticEngine;
 
-/// ActionStatus defines the result of a deontic evaluation.
+#[derive(Debug, PartialEq)] // Added Debug for println! and PartialEq for comparisons
 pub enum ActionStatus {
     Allowed,
     Forbidden,
 }
 
-/// A Norm represents a rule: Obligation, Permission, or Prohibition.
 pub struct Norm {
     pub description: String,
 }
 
-/// The DeonticEngine enforces normative rules on top of axiomatic truths.
+impl Norm {
+    pub fn new(description: &str) -> Self {
+        Self {
+            description: description.to_string(),
+        }
+    }
+}
+
 pub struct DeonticEngine {
     pub axiomatics: AxiomaticEngine,
     pub norms: Vec<Norm>,
@@ -30,13 +35,9 @@ impl DeonticEngine {
         self.norms.push(norm);
     }
 
-    /// Verifies if an action is compliant with both axioms and norms.
     pub fn check_compliance(&self, action: &str) -> ActionStatus {
-        // 1. First, check the Axiom of Regularity via the AxiomaticEngine
         let is_axiomatic = self.axiomatics.verify_regularity(action);
-        
-        // 2. Then check if the action is explicitly forbidden
-        let is_forbidden = action.contains("FORBIDDEN") || action.contains("illegal");
+        let is_forbidden = action.contains("FORBIDDEN") || action.contains("unauthorized");
 
         if is_axiomatic && !is_forbidden {
             ActionStatus::Allowed
