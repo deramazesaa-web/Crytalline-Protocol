@@ -294,10 +294,6 @@ Layer 2 functions as a translator. It can export the internal ZF-proofs of Cryst
 2. **Oracle Synthesis:** Bridging the gap between the "Closed World" of axioms and the "Open World" of external information.
 3. **Privacy Shields:** Using the Axiom of Specification to hide elements of a set while proving the set's overall properties (Axiomatic Zero-Knowledge).
 
-**Contact (Encrypted):**
-* **ProtonMail:** [Your Email]
-* **Telegram/Session:** [Your Handle]
-
 ---
 *Logic is the only architecture that requires no foundation other than its own consistency.*  
 
