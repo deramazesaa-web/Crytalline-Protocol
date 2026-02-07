@@ -316,9 +316,15 @@ I am not seeking traditional venture capital or "mentorship." I am offering the 
 
 ## 7. Roadmap
 
-- [x] **Phase 1: Formal Foundation** (Current) - Mapping ZF-axioms to state-space.
-- [ ] **Phase 2: CVM Instruction Set** - Translating logical operators to opcodes.
-- [ ] **Phase 3: ZK-Prover Implementation** - Off-chain proof generation for axiomatic consistency.
+[x] Phase 1: Core Rust implementation of ZF Axioms (Completed).
+
+[x] Phase 2: Deontic Logic Operators & Parser (Completed).
+
+[ ] Phase 3: Integration with LangChain & AutoGPT (In Progress).
+
+[ ] Phase 4: Hardware-level enforcement (FPGA/ASIC designs).
+
+[ ] Phase 5: Formal verification of the Kernel using Coq/Lean
 
 ---
 ## 🛠 Proof of Concept: The Axiomatic Engine
