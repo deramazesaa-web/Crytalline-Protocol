@@ -1,11 +1,20 @@
-// Scenario: Encrypting a message for WhatsApp using Axiomatic Logic
+use crystalline_protocol::{AxiomaticEngine, DeonticEngine, ActionStatus};
+
 fn main() {
-    let my_kernel = Kernel::new();
-    let message = "Secret meeting at 9 PM";
+    println!("--- [MODULE: E2E PRIVACY] ---");
+    let engine = AxiomaticEngine::new();
+    let mut deontic = DeonticEngine::new();
+
+    let payload = "confidential_e2e_message";
     
-    // Apply ZF-Axioms to create a "Mathematical Lock"
-    let encrypted_data = my_kernel.seal_information(message, recipient_axiom_key);
-    
-    println!("Data to paste into WhatsApp: {}", encrypted_data);
-    // WhatsApp/Meta cannot break this without breaking ZF Set Theory.
+    // Extensionality ensures the message hasn't been tampered with
+    if engine.verify_extensionality(payload) {
+        println!("Axiom of Extensionality: Integrity confirmed.");
+        
+        let compliance = deontic.check_compliance(payload);
+        match compliance {
+            ActionStatus::Allowed => println!("Privacy Check: Message cleared for transmission."),
+            ActionStatus::Forbidden => println!("Privacy Check: Potential data leak detected."),
+        }
+    }
 }
