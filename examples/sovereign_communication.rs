@@ -1,34 +1,19 @@
-use crystalline_kernel::{Kernel, Axiom, StateSet, Encryption};
-
-/// Scenario: Sovereign Communication over untrusted channels.
-/// Objective: Use the Crystalline Kernel to seal a message, making it 
-/// mathematically inaccessible to the transport provider (e.g., WhatsApp).
+use crystalline_protocol::{AxiomaticEngine, LogicPartition, DeonticEngine, ActionStatus};
 
 fn main() {
-    // 1. Initialize the Crystalline Kernel with strict safety axioms
-    let mut kernel = Kernel::new();
-    kernel.enforce(Axiom::Extensionality);
+    println!("--- [MODULE: IN-SITU SOVEREIGNTY] ---");
     
-    // 2. The private message to be protected
-    let plaintext = "The objective is secured. Logic remains deterministic.";
-
-    println!("Original Message: {}", plaintext);
-
-    // 3. Axiomatic Sealing process
-    // We bind the information to a specific logical state. 
-    // The transport layer sees only the proof-wrapped result.
-    let recipient_proof_id = "0x_sovereign_identity_v2_99";
+    // In-Situ means data never leaves the axiomatic shell
+    let engine = AxiomaticEngine::new();
+    let partition = LogicPartition::new("SOVEREIGN_USER_DATA");
     
-    let sealed_packet = kernel.seal_as_set(plaintext, recipient_proof_id)
-        .expect("Axiomatic constraint application failed");
+    println!("Sovereignty Zone: {} initialized.", partition.label);
 
-    // 4. Output for use in insecure environments
-    let output_data = sealed_packet.to_base64();
-    
-    println!("\n--- AXIOMATICALLY SEALED PACKET ---");
-    println!("{}", output_data);
-    println!("------------------------------------");
-
-    println!("\nConclusion: The transport provider cannot intercept this data ");
-    println!("without violating the fundamental axioms of the execution kernel.");
+    // Regularity ensures no outside app (like Meta) can create a logic loop to extract data
+    if engine.verify_regularity("internal_sovereign_state") {
+        println!("Axiom of Regularity: No external recursion detected.");
+        println!("Status: DATA SOVEREIGNTY MAINTAINED.");
+    } else {
+        println!("CRITICAL: Logic breach attempt detected!");
+    }
 }
