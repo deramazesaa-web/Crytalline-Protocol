@@ -44,6 +44,18 @@ The **Crystalline Protocol** is a formal framework for creating **Super-Subjects
 ### Why ZF Set Theory?
 Most blockchains treat transactions as isolated state changes. Crystalline treats the entire system as a **Formal Set**. By enforcing ZF-axioms at the Virtual Machine (CVM) level, we ensure that a state transition is rejected if it introduces a logical contradiction ($\bot$).
 
+## 📱 Consumer Privacy & Sovereign Communication
+
+Crystalline Protocol provides a foundation for **Sovereign Communication** by moving security from the application layer to the mathematical layer. 
+
+### The Axiomatic Proxy
+Traditional messaging platforms (WhatsApp, Telegram) rely on centralized key management. Crystalline enables an **Axiomatic Encryption Layer** that operates independently of the transport provider:
+* **Mathematical Isolation:** Messages are treated as closed sets. Decryption is only possible if the recipient can satisfy the set-theoretic proof defined at the kernel level.
+* **Provider Agnostic:** Even if the underlying service (Meta, Google, etc.) is compromised, the data remains a logically "unsolvable" set for any entity lacking the specific axiomatic proof.
+* **Deterministic Privacy:** Privacy is enforced by the laws of ZF-Set Theory, ensuring that information leakage is a logical impossibility within the Crystalline environment.
+
+**View implementation example:** [`examples/sovereign_communication.rs`](./examples/sovereign_communication.rs)
+
 ## Formal Mathematical Framework
 
 ### 1.1 Set-Theoretic Foundation (ZF)
