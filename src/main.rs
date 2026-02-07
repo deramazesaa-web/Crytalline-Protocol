@@ -1,7 +1,8 @@
 mod axiomatics;
 mod deontic_engine;
 
-use axiomatics::LogicPartition;
+// Fixed: Import AxiomaticEngine instead of AxiomaticLayer
+use axiomatics::{AxiomaticEngine, LogicPartition};
 use deontic_engine::{DeonticEngine, Norm, ActionStatus};
 
 fn main() {
@@ -9,26 +10,23 @@ fn main() {
 
     let mut engine = DeonticEngine::new();
     
-    // Create a secure partition
-    let partition = LogicPartition::new("ZONE_ALPHA");
-    println!("Partition [{}] is initialized.", partition.label);
+    // Axiom of Separation check
+    let partition = LogicPartition::new("ZONE_ALPHA_SECURE");
+    println!("Partition [{}] initialized.", partition.label);
 
-    // Create and add a norm using the new() method
-    let secure_norm = Norm::new("Process_Verified_Batch");
+    let secure_norm = Norm::new("Axiomatic_Zero_Trust_Policy");
     engine.add_norm(secure_norm);
     
-    let action_payload = "data_packet_01_verify";
+    let action_payload = "verify_data_integrity";
     let status = engine.check_compliance(action_payload);
     
-    // Now ActionStatus can be printed with {:?} because we added #[derive(Debug)]
-    println!("Deontic Status for payload: {:?}", status);
-    
+    // Pattern match the result
     match status {
         ActionStatus::Allowed => {
-            println!("Result: PROCEED. Constraints satisfied.");
+            println!("Result: PROCEED. Logic validated.");
         },
         ActionStatus::Forbidden => {
-            println!("Result: HALT. Logic violation detected.");
+            println!("Result: HALT. Contradiction detected.");
         },
     }
 }
