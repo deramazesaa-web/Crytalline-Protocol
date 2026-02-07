@@ -2,7 +2,6 @@
 ![Rust](https://img.shields.io/badge/language-Rust-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Deontic Logic](https://img.shields.io/badge/Logic-Deontic-green.svg)
-![Status](https://img.shields.io/badge/Status-In--Development-yellow.svg)
 
 # 💎 Crystalline Protocol
 
