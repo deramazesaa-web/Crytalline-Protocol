@@ -1,6 +1,7 @@
 use crate::axiomatics::AxiomaticEngine;
 
-#[derive(Debug, PartialEq)] // Added Debug for println! and PartialEq for comparisons
+// Added Debug so we can print the status in main.rs
+#[derive(Debug)] 
 pub enum ActionStatus {
     Allowed,
     Forbidden,
@@ -11,10 +12,8 @@ pub struct Norm {
 }
 
 impl Norm {
-    pub fn new(description: &str) -> Self {
-        Self {
-            description: description.to_string(),
-        }
+    pub fn new(desc: &str) -> Self {
+        Self { description: desc.to_string() }
     }
 }
 
@@ -36,10 +35,8 @@ impl DeonticEngine {
     }
 
     pub fn check_compliance(&self, action: &str) -> ActionStatus {
-        let is_axiomatic = self.axiomatics.verify_regularity(action);
-        let is_forbidden = action.contains("FORBIDDEN") || action.contains("unauthorized");
-
-        if is_axiomatic && !is_forbidden {
+        // We use the engine to verify regularity (no loops)
+        if self.axiomatics.verify_regularity(action) && !action.contains("illegal") {
             ActionStatus::Allowed
         } else {
             ActionStatus::Forbidden
