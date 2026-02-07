@@ -1,52 +1,33 @@
-use crystalline_protocol::{Kernel, AxiomChecker, DeonticLogic};
-
-/// SCENARIO: SECURE WHATSAPP TUNNELING
-/// 
-/// We are simulating a "Hostile Environment" (WhatsApp) where data must be 
-/// mathematically sealed before it touches the application memory.
-///
-/// The Kernel applies 4 ZF-Axioms to ensure:
-/// 1. Extensionality: The data identity is unique (No spoofing).
-/// 2. Regularity: The data contains no recursive attack loops.
-/// 3. Separation: The app can only access the "Public" subset, not the "Private" core.
-/// 4. Choice: The system can deterministically select the valid decryption key.
+use crystalline_protocol::{AxiomaticEngine, DeonticEngine, LogicPartition, Norm, ActionStatus};
 
 fn main() {
-    // 1. Initialize the Axiomatic Kernel
-    let kernel = Kernel::new();
-    println!("--- [SYSTEM BOOT] Crystalline Kernel v{} ---", kernel.version);
-    println!("--- Mode: In-Situ Sovereignty (WhatsApp Wrapper) ---");
-    println!("");
+    println!("--- WHATSAPP SOVEREIGNTY SIMULATOR ---");
 
-    // 2. Simulate Input Data
-    // "CONFIDENTIAL" is the predicate required by the Axiom of Separation.
-    // If this tag is missing, the Kernel mathematically cannot "see" the data.
-    let raw_payload = "PAYLOAD_DATA_CONFIDENTIAL_WX99"; 
+    let engine = AxiomaticEngine::new();
+    let mut deontic = DeonticEngine::new();
+
+    // 1. Define the WhatsApp isolation zone (Axiom of Separation)
+    let partition = LogicPartition::new("WHATSAPP_SANDBOX");
     
-    // 3. User Identity Proof (The Key)
-    // Must satisfy Deontic Logic (Not Forbidden, Not Revoked).
-    let user_proof = "IDENTITY_VERIFIED_USER_01"; 
+    // 2. Define the security policy
+    let policy = Norm::new("ENCRYPT_BEFORE_EXIT");
+    deontic.add_norm(policy);
 
-    // 4. The "Predicate" (Logic Filter)
-    // We define a subset φ(x): "Allow access only if data is tagged CONFIDENTIAL"
-    let separation_predicate = "CONFIDENTIAL";
+    // 3. Simulated incoming data from WhatsApp
+    let incoming_data = "user_message_payload_77";
+    
+    println!("Intercepting data for partition: {}", partition.label);
 
-    println!("[KERNEL] Intercepting Input Stream...");
-    println!("[KERNEL] Applying ZF-Axioms (Extensionality, Regularity, Separation, Choice)...");
-
-    // 5. The Core Verification Process
-    let is_secure = kernel.verify_sovereignty(raw_payload, user_proof, separation_predicate);
-
-    println!("");
-    if is_secure {
-        println!(">>> [SUCCESS] State Validated.");
-        println!(">>> Axiom of Separation: ALLOWED (Subset condition met).");
-        println!(">>> Axiom of Regularity: PASSED (No cycles detected).");
-        println!(">>> Deontic Status: OBLIGATION_FULFILLED.");
-        println!(">>> Action: Decrypting message locally via 'Blind Carrier' protocol.");
+    // 4. Verify via Axiomatic Engine
+    if engine.verify_regularity(incoming_data) {
+        println!("Axiom of Regularity: PASSED");
+        
+        let status = deontic.check_compliance(incoming_data);
+        match status {
+            ActionStatus::Allowed => println!("Final Result: SECURE. Data wrapped in Crystalline shell."),
+            ActionStatus::Forbidden => println!("Final Result: BLOCKED. Policy violation."),
+        }
     } else {
-        println!(">>> [FAILURE] Axiomatic Violation Detected.");
-        println!(">>> The data structure contradicts the defined logical physics.");
-        println!(">>> Action: MEMORY_WIPE initiated.");
+        println!("Axiom Violation: Recursive loop detected in untrusted app.");
     }
 }
