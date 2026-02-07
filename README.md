@@ -62,10 +62,6 @@ Crystalline Protocol shifts the security boundary from the **application layer**
 * **Mathematical Isolation:** The "Blind Carrier" serves only as a transport mechanism, lacking the logical tools to reverse the state transition enforced by the Crystalline Kernel.
 * **Deterministic Privacy:** Security is no longer a feature of the app; it is a constraint of the environment.
 
-**View implementation:** [`examples/in_situ_sovereignty.rs`](./examples/in_situ_sovereignty.rs)
-
-**View implementation example:** [`examples/sovereign_communication.rs`](./examples/sovereign_communication.rs)
-
 ## Formal Mathematical Framework
 
 ### 1.1 Set-Theoretic Foundation (ZF)
