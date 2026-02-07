@@ -6,9 +6,6 @@ on:
   pull_request:
     branches: [ "main" ]
 
-env:
-  CARGO_TERM_COLOR: always
-
 jobs:
   build-core:
     runs-on: ubuntu-latest
@@ -29,11 +26,8 @@ jobs:
 
     - name: Execute Build Script
       run: |
-        chmod +x scripts/build_all.sh
+        # Use 'ls -R' to debug if the file is actually there (visible in logs)
+        ls -R
+        # Give permission and run using the explicit relative path
+        chmod +x ./scripts/build_all.sh
         ./scripts/build_all.sh
-
-    - name: Upload Build Artifacts
-      uses: actions/upload-artifact@v4
-      with:
-        name: crystalline-core-binaries
-        path: target/android/jniLibs/
