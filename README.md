@@ -54,6 +54,16 @@ Traditional messaging platforms (WhatsApp, Telegram) rely on centralized key man
 * **Provider Agnostic:** Even if the underlying service (Meta, Google, etc.) is compromised, the data remains a logically "unsolvable" set for any entity lacking the specific axiomatic proof.
 * **Deterministic Privacy:** Privacy is enforced by the laws of ZF-Set Theory, ensuring that information leakage is a logical impossibility within the Crystalline environment.
 
+### In-Situ Sovereignty: Treating Apps as "Blind Carriers"
+
+Crystalline Protocol shifts the security boundary from the **application layer** to the **input/kernel layer**. By the time an untrusted application (like WhatsApp or a third-party AI agent) receives user data, that data has already been transformed into an axiomatic proof-object.
+
+* **Entropy Protection:** Raw user input never enters the heap/stack of the untrusted process.
+* **Mathematical Isolation:** The "Blind Carrier" serves only as a transport mechanism, lacking the logical tools to reverse the state transition enforced by the Crystalline Kernel.
+* **Deterministic Privacy:** Security is no longer a feature of the app; it is a constraint of the environment.
+
+**View implementation:** [`examples/in_situ_sovereignty.rs`](./examples/in_situ_sovereignty.rs)
+
 **View implementation example:** [`examples/sovereign_communication.rs`](./examples/sovereign_communication.rs)
 
 ## Formal Mathematical Framework
