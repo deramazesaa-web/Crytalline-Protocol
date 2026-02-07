@@ -1,3 +1,4 @@
+![Rust CI](https://github.com/deramazesaa-web/Crystalline-Protocol/actions/workflows/rust.yml/badge.svg)
 ![Rust](https://img.shields.io/badge/language-Rust-orange.svg)
 ![License](https://img.shields.io/badge/license-MIT-blue.svg)
 ![Deontic Logic](https://img.shields.io/badge/Logic-Deontic-green.svg)
